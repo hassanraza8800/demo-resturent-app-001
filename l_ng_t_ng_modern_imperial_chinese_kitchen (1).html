@@ -1,0 +1,3137 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lóng Tíng (龍庭) — Modern Imperial Chinese Kitchen</title>
+
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Noto Serif SC, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Serif+SC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0b0908',
+            charcoal: '#14100e',
+            lacquer: '#1c1512',
+            crimson: '#9e1b1b',
+            vermilion: '#c82323',
+            gold: '#d4af37',
+            champagne: '#f3d27a',
+            ivory: '#f5efe6',
+            mist: '#a89b8c',
+          },
+          fontFamily: {
+            display: ['"Cinzel"', 'Georgia', 'serif'],
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            cn: ['"Noto Serif SC"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --obsidian: #0b0908;
+      --charcoal: #14100e;
+      --crimson: #9e1b1b;
+      --vermilion: #c82323;
+      --gold: #d4af37;
+      --champagne: #f3d27a;
+      --ivory: #f5efe6;
+    }
+
+    html {
+      background-color: var(--obsidian);
+      color: var(--ivory);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    /* overflow-x: clip prevents horizontal scrollbars without breaking position: sticky */
+    body {
+      background-color: var(--obsidian);
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0908;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #d4af37, #9e1b1b);
+      border-radius: 999px;
+    }
+
+    /* Architectural Surfaces & Borders */
+    .gold-border {
+      border: 1px solid rgba(212, 175, 55, 0.24);
+    }
+
+    .gold-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.58), transparent);
+    }
+
+    .photo-vignette {
+      background: linear-gradient(180deg, rgba(11, 9, 8, 0.08) 0%, rgba(11, 9, 8, 0.22) 52%, rgba(11, 9, 8, 0.92) 100%);
+    }
+
+    .subtle-lattice {
+      background-image:
+        linear-gradient(to right, rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+
+    /* =========================================================================
+       HANGING CHINESE SILK LANTERNS (DAMPED PENDULUM)
+       ========================================================================= */
+    .hanging-lantern-anchor {
+      position: fixed;
+      top: 0;
+      z-index: 45;
+      pointer-events: none;
+      transform-origin: top center;
+      will-change: transform;
+      filter: drop-shadow(0 14px 28px rgba(158, 27, 27, 0.32));
+    }
+
+    .hanging-lantern-left {
+      left: 24px;
+    }
+
+    .hanging-lantern-right {
+      right: 24px;
+    }
+
+    .lantern-swing-body {
+      transform-origin: 48px 0px;
+      will-change: transform;
+    }
+
+    .lantern-tassel-swing {
+      transform-origin: 48px 136px;
+      will-change: transform;
+    }
+
+    @keyframes lanternCandleFlicker {
+      0%, 100% { opacity: 0.86; }
+      25% { opacity: 0.96; }
+      50% { opacity: 0.78; }
+      75% { opacity: 0.94; }
+    }
+
+    .lantern-inner-glow {
+      animation: lanternCandleFlicker 3.6s ease-in-out infinite;
+    }
+
+    @media (max-width: 767px) {
+      .hanging-lantern-anchor {
+        transform: scale(0.62);
+      }
+      .hanging-lantern-left {
+        left: 2px;
+        transform-origin: top left;
+      }
+      .hanging-lantern-right {
+        right: 2px;
+        transform-origin: top right;
+      }
+    }
+
+    /* =========================================================================
+       WARM LANTERN-GLOW POINTER HALO
+       ========================================================================= */
+    #pointer-halo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 260px;
+      height: 260px;
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 9997;
+      opacity: 0;
+      transform: translate3d(-500px, -500px, 0);
+      background: radial-gradient(
+        circle,
+        rgba(243, 210, 122, 0.11) 0%,
+        rgba(212, 175, 55, 0.055) 36%,
+        rgba(158, 27, 27, 0.025) 62%,
+        rgba(11, 9, 8, 0) 75%
+      );
+      transition: opacity 0.35s ease;
+      will-change: transform, opacity;
+      mix-blend-mode: screen;
+    }
+
+    /* Carved Dark-Wood Chinese Lattice Doors (Act 0) */
+    .lattice-door-surface {
+      background-color: #120d0b;
+      background-image:
+        linear-gradient(to right, rgba(212, 175, 55, 0.16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(212, 175, 55, 0.16) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(158, 27, 27, 0.18) 0%, rgba(11, 9, 8, 0.92) 85%);
+      background-size: 64px 64px, 64px 64px, 100% 100%;
+    }
+
+    /* Authentic Cinnabar Seal Stamp (印章) + Impact Animation */
+    .cinnabar-seal {
+      border: 1.5px solid #c82323;
+      color: #f5efe6;
+      background: linear-gradient(145deg, rgba(180, 26, 26, 0.96), rgba(115, 14, 14, 0.98));
+      box-shadow: inset 0 0 0 2px rgba(11, 9, 8, 0.35), 0 8px 22px rgba(158, 27, 27, 0.42);
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      letter-spacing: 0.12em;
+    }
+
+    @keyframes sealStampImpact {
+      0% {
+        opacity: 0;
+        transform: scale(2.1) rotate(-12deg) translateY(-10px);
+      }
+      55% {
+        opacity: 1;
+        transform: scale(0.92) rotate(2deg) translateY(1px);
+      }
+      80% {
+        transform: scale(1.04) rotate(-1deg) translateY(0);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg) translateY(0);
+      }
+    }
+
+    @keyframes inkBleedHalo {
+      0% {
+        opacity: 0.85;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2.2);
+      }
+    }
+
+    .seal-stamp-target {
+      opacity: 0;
+      transform: scale(1.9) rotate(-10deg);
+    }
+    .seal-stamp-target.stamped {
+      animation: sealStampImpact 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .seal-ink-halo {
+      position: absolute;
+      inset: -6px;
+      border-radius: 8px;
+      border: 2px solid rgba(200, 35, 35, 0.85);
+      background: radial-gradient(circle, rgba(200, 35, 35, 0.35) 0%, rgba(158, 27, 27, 0) 70%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .seal-stamp-target.stamped .seal-ink-halo {
+      animation: inkBleedHalo 0.8s ease-out 0.2s forwards;
+    }
+
+    /* =========================================================================
+       ACT 1: CIRCULAR MOON-GATE (YUÈDÒNGMÉN 月洞門) APERTURE REVEAL
+       ========================================================================= */
+    @media (min-width: 1024px) {
+      #act-kitchen {
+        min-height: 340vh;
+      }
+      .kitchen-sticky-stage {
+        position: sticky;
+        top: 88px;
+      }
+      .moongate-brass-ring {
+        transition: none;
+      }
+    }
+
+    .moongate-brass-ring {
+      transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    @media (min-width: 1024px) {
+      .moongate-brass-ring {
+        transition: none;
+      }
+    }
+
+    .moongate-layer {
+      position: absolute;
+      inset: 0;
+    }
+    .moongate-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes moonGateExpand {
+      0% {
+        clip-path: circle(0% at 50% 50%);
+      }
+      100% {
+        clip-path: circle(75% at 50% 50%);
+      }
+    }
+
+    @keyframes moonGateKenBurns {
+      0% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .moongate-layer.is-expanding {
+      animation: moonGateExpand 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .moongate-layer.is-expanding img {
+      animation: moonGateKenBurns 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* =========================================================================
+       ACT 2: WOVEN BAMBOO STEAMER LID TEXTURE
+       ========================================================================= */
+    .bamboo-lid-texture {
+      background:
+        repeating-radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.16) 0px, rgba(212, 175, 55, 0.16) 2px, transparent 2px, transparent 10px),
+        repeating-conic-gradient(from 0deg, rgba(180, 134, 72, 0.22) 0deg 6deg, rgba(96, 66, 32, 0.28) 6deg 12deg),
+        radial-gradient(circle at 36% 32%, #aa804c 0%, #7c582e 48%, #4a3319 88%, #2e1e0d 100%);
+      box-shadow:
+        inset 0 0 28px rgba(11, 9, 8, 0.72),
+        inset 0 2px 6px rgba(243, 210, 122, 0.35),
+        0 20px 44px rgba(0, 0, 0, 0.82);
+    }
+
+    /* =========================================================================
+       ACT 3: MENU CARD 3D TILT & PORCELAIN GLAZE HIGHLIGHT
+       ========================================================================= */
+    .dish-card {
+      transform-style: preserve-3d;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.35s ease;
+      will-change: transform;
+    }
+    .dish-card:hover {
+      border-color: rgba(212, 175, 55, 0.58);
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85), 0 0 28px rgba(212, 175, 55, 0.12);
+    }
+    .dish-card .card-img {
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dish-card:hover .card-img {
+      transform: scale(1.06);
+    }
+    .porcelain-sheen {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      mix-blend-mode: screen;
+      background: radial-gradient(circle 230px at var(--gx, 50%) var(--gy, 50%), rgba(245, 239, 230, 0.22) 0%, rgba(243, 210, 122, 0.09) 42%, rgba(212, 175, 55, 0) 76%);
+    }
+    .dish-card:hover .porcelain-sheen {
+      opacity: 1;
+    }
+
+    /* Scroll Reveal Fade-Up */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================================================================
+       ACT V: SCROLL-DRIVEN PRIVATE DINING ROOMS ARCHITECTURAL WALKTHROUGH
+       ========================================================================= */
+    @media (min-width: 1024px) {
+      #act-rooms {
+        min-height: 290vh;
+      }
+      .rooms-sticky-stage {
+        position: sticky;
+        top: 84px;
+      }
+    }
+
+    .room-photo-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      will-change: clip-path;
+    }
+
+    .room-photo-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform;
+    }
+
+    @media (max-width: 1023px) {
+      .room-photo-layer {
+        transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+    }
+
+    /* Luminous Antique-Gold Vertical Brass Divider Seam */
+    .room-brass-seam {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      margin-left: -1.5px;
+      pointer-events: none;
+      z-index: 25;
+      opacity: 0;
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.15) 0%, #f3d27a 28%, #fff4d2 50%, #d4af37 72%, rgba(212, 175, 55, 0.15) 100%);
+      box-shadow: 0 0 18px 2px rgba(243, 210, 122, 0.75), 0 0 38px 6px rgba(212, 175, 55, 0.35);
+      will-change: left, opacity;
+    }
+
+    /* Staggered Architectural Dossier Reveal */
+    .dossier-stagger {
+      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .dossier-stagger.is-entering {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    /* Live Gold Progress Bar on Room Selector Tabs */
+    .room-tab-progress-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2.5px;
+      background: rgba(212, 175, 55, 0.1);
+      overflow: hidden;
+    }
+    .room-tab-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #9e1b1b 0%, #d4af37 55%, #f3d27a 100%);
+      box-shadow: 0 0 10px rgba(243, 210, 122, 0.65);
+      will-change: width;
+    }
+
+    /* Equalizer Bars for Guzheng Ambience Button */
+    @keyframes eqPulse {
+      0%, 100% { height: 4px; }
+      50% { height: 14px; }
+    }
+    .eq-bar {
+      width: 2px;
+      height: 4px;
+      background-color: #d4af37;
+      border-radius: 2px;
+      transition: height 0.2s ease;
+    }
+    .audio-active .eq-bar:nth-child(1) { animation: eqPulse 0.9s ease-in-out infinite; }
+    .audio-active .eq-bar:nth-child(2) { animation: eqPulse 0.7s ease-in-out 0.2s infinite; }
+    .audio-active .eq-bar:nth-child(3) { animation: eqPulse 1.1s ease-in-out 0.1s infinite; }
+
+    /* Respect Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-up, .dish-card, .dish-card .card-img, .moongate-brass-ring, .moongate-layer, .seal-stamp-target, .lantern-inner-glow {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-obsidian text-ivory selection:bg-crimson selection:text-ivory">
+
+  <!-- TOP GOLD-TO-CRIMSON SCROLL PROGRESS BAR -->
+  <div class="fixed top-0 left-0 right-0 z-50 h-[3px] bg-white/5 pointer-events-none">
+    <div id="scroll-progress" class="h-full w-0 bg-gradient-to-r from-gold via-champagne to-vermilion"></div>
+  </div>
+
+  <!-- SPARKLING GOLDEN WOK-EMBER MOUSE TRAIL CANVAS & WARM POINTER HALO -->
+  <canvas id="sparkle-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-[9998]" aria-hidden="true"></canvas>
+  <div id="pointer-halo" aria-hidden="true"></div>
+
+  <!-- HANGING CHINESE SILK LANTERN — LEFT (龍) -->
+  <div class="hanging-lantern-anchor hanging-lantern-left" aria-hidden="true">
+    <svg width="96" height="232" viewBox="0 0 96 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="lanternGlowL" cx="50%" cy="46%" r="54%">
+          <stop offset="0%" stop-color="#f3d27a" stop-opacity="0.95" />
+          <stop offset="40%" stop-color="#c82323" stop-opacity="0.96" />
+          <stop offset="100%" stop-color="#610c0c" stop-opacity="0.98" />
+        </radialGradient>
+      </defs>
+      <g id="lantern-left-body" class="lantern-swing-body">
+        <!-- Hanging Silk Cord -->
+        <line x1="48" y1="0" x2="48" y2="34" stroke="#d4af37" stroke-width="1.8" />
+        <circle cx="48" cy="34" r="3.5" fill="#d4af37" />
+        <!-- Top Carved Cap -->
+        <rect x="31" y="37" width="34" height="8" rx="3" fill="#23140e" stroke="#d4af37" stroke-width="1.2" />
+        <!-- Ribbed Silk Body -->
+        <ellipse cx="48" cy="87" rx="32" ry="44" fill="url(#lanternGlowL)" stroke="#d4af37" stroke-width="1.4" />
+        <ellipse cx="48" cy="87" rx="22" ry="43" fill="none" stroke="#d4af37" stroke-opacity="0.35" stroke-width="1" />
+        <ellipse cx="48" cy="87" rx="11" ry="43" fill="none" stroke="#d4af37" stroke-opacity="0.3" stroke-width="1" />
+        <!-- Inner Candle Glow -->
+        <ellipse class="lantern-inner-glow" cx="48" cy="87" rx="16" ry="22" fill="#f3d27a" fill-opacity="0.28" />
+        <!-- Calligraphy Character -->
+        <text x="48" y="96" text-anchor="middle" fill="#f3d27a" font-family="'Noto Serif SC', serif" font-size="26" font-weight="700">龍</text>
+        <!-- Bottom Carved Cap -->
+        <rect x="33" y="129" width="30" height="7" rx="2.5" fill="#23140e" stroke="#d4af37" stroke-width="1.2" />
+        <!-- Secondary Swinging Silk Tassel -->
+        <g id="lantern-left-tassel" class="lantern-tassel-swing">
+          <circle cx="48" cy="141" r="4" fill="#d4af37" />
+          <rect x="44" y="145" width="8" height="10" rx="2" fill="#9e1b1b" stroke="#d4af37" stroke-width="0.9" />
+          <line x1="45" y1="155" x2="43" y2="210" stroke="#c82323" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="48" y1="155" x2="48" y2="216" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" />
+          <line x1="51" y1="155" x2="53" y2="210" stroke="#9e1b1b" stroke-width="1.8" stroke-linecap="round" />
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- HANGING CHINESE SILK LANTERN — RIGHT (庭) -->
+  <div class="hanging-lantern-anchor hanging-lantern-right" aria-hidden="true">
+    <svg width="96" height="232" viewBox="0 0 96 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="lanternGlowR" cx="50%" cy="46%" r="54%">
+          <stop offset="0%" stop-color="#f3d27a" stop-opacity="0.95" />
+          <stop offset="40%" stop-color="#c82323" stop-opacity="0.96" />
+          <stop offset="100%" stop-color="#610c0c" stop-opacity="0.98" />
+        </radialGradient>
+      </defs>
+      <g id="lantern-right-body" class="lantern-swing-body">
+        <line x1="48" y1="0" x2="48" y2="34" stroke="#d4af37" stroke-width="1.8" />
+        <circle cx="48" cy="34" r="3.5" fill="#d4af37" />
+        <rect x="31" y="37" width="34" height="8" rx="3" fill="#23140e" stroke="#d4af37" stroke-width="1.2" />
+        <ellipse cx="48" cy="87" rx="32" ry="44" fill="url(#lanternGlowR)" stroke="#d4af37" stroke-width="1.4" />
+        <ellipse cx="48" cy="87" rx="22" ry="43" fill="none" stroke="#d4af37" stroke-opacity="0.35" stroke-width="1" />
+        <ellipse cx="48" cy="87" rx="11" ry="43" fill="none" stroke="#d4af37" stroke-opacity="0.3" stroke-width="1" />
+        <ellipse class="lantern-inner-glow" cx="48" cy="87" rx="16" ry="22" fill="#f3d27a" fill-opacity="0.28" />
+        <text x="48" y="96" text-anchor="middle" fill="#f3d27a" font-family="'Noto Serif SC', serif" font-size="26" font-weight="700">庭</text>
+        <rect x="33" y="129" width="30" height="7" rx="2.5" fill="#23140e" stroke="#d4af37" stroke-width="1.2" />
+        <g id="lantern-right-tassel" class="lantern-tassel-swing">
+          <circle cx="48" cy="141" r="4" fill="#d4af37" />
+          <rect x="44" y="145" width="8" height="10" rx="2" fill="#9e1b1b" stroke="#d4af37" stroke-width="0.9" />
+          <line x1="45" y1="155" x2="43" y2="210" stroke="#c82323" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="48" y1="155" x2="48" y2="216" stroke="#d4af37" stroke-width="1.6" stroke-linecap="round" />
+          <line x1="51" y1="155" x2="53" y2="210" stroke="#9e1b1b" stroke-width="1.8" stroke-linecap="round" />
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- =========================================================================
+       FIXED LUXURY NAVIGATION BAR
+       ========================================================================= -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-40 border-b border-transparent transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between gap-4">
+      <!-- Brand Crest -->
+      <a href="#act-entrance" class="flex items-center gap-3 group">
+        <div class="cinnabar-seal w-7 h-9 rounded-sm flex items-center justify-center font-cn text-[11px] font-bold">龍庭</div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-display text-base sm:text-lg tracking-[0.22em] text-ivory group-hover:text-champagne transition-colors">LÓNG TÍNG</span>
+            <span class="font-cn text-xs text-gold/80 hidden sm:inline">龍庭</span>
+          </div>
+          <div class="text-[9px] uppercase tracking-[0.26em] text-gold/75">Imperial Chinese Kitchen</div>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-[11px] uppercase tracking-[0.22em] text-ivory/80">
+        <a href="#act-entrance" class="hover:text-champagne transition-colors">Entrance</a>
+        <a href="#act-kitchen" class="hover:text-champagne transition-colors">Kitchen</a>
+        <a href="#act-steamer" class="hover:text-champagne transition-colors">Steamer</a>
+        <a href="#act-menu" class="hover:text-champagne transition-colors">Menu</a>
+        <a href="#act-chef" class="hover:text-champagne transition-colors">Chef</a>
+        <a href="#act-rooms" class="hover:text-champagne transition-colors">Rooms</a>
+      </nav>
+
+      <!-- Action Controls -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Guzheng Ambient Audio Toggle -->
+        <button id="ambience-btn" type="button" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-obsidian/70 border border-gold/25 hover:border-gold/60 text-[10px] uppercase tracking-[0.2em] text-champagne transition-colors">
+          <span class="flex items-end gap-[2px] h-3.5">
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+          </span>
+          <span id="ambience-label">Guzheng</span>
+        </button>
+
+        <!-- Tasting Tray Button -->
+        <button id="open-tray-btn" type="button" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-obsidian/75 border border-gold/30 hover:border-gold text-[10px] uppercase tracking-[0.2em] text-ivory transition-colors">
+          <svg class="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="hidden sm:inline">Tasting</span>
+          <span id="tray-badge" class="w-5 h-5 rounded-full bg-crimson text-ivory text-[10px] font-semibold flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Primary Reserve CTA -->
+        <a href="#act-reservations" class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-crimson hover:bg-vermilion text-ivory text-[10px] uppercase tracking-[0.22em] font-medium shadow-lg shadow-crimson/25 transition-colors">
+          Reserve Table
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" class="lg:hidden w-10 h-10 rounded-full bg-obsidian/80 border border-gold/30 flex items-center justify-center text-ivory">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-nav" class="hidden lg:hidden bg-obsidian/96 backdrop-blur-xl border-b border-gold/20 px-6 py-5 space-y-3">
+      <a href="#act-entrance" class="mobile-nav-link block py-1.5 text-xs uppercase tracking-[0.22em] text-ivory/85 hover:text-gold">Entrance</a>
+      <a href="#act-kitchen" class="mobile-nav-link block py-1.5 text-xs uppercase tracking-[0.22em] text-ivory/85 hover:text-gold">Live Kitchen</a>
+      <a href="#act-steamer" class="mobile-nav-link block py-1.5 text-xs uppercase tracking-[0.22em] text-ivory/85 hover:text-gold">Bamboo Steamer</a>
+      <a href="#act-menu" class="mobile-nav-link block py-1.5 text-xs uppercase tracking-[0.22em] text-ivory/85 hover:text-gold">Imperial Menu</a>
+      <a href="#act-chef" class="mobile-nav-link block py-1.5 text-xs uppercase tracking-[0.22em] text-ivory/85 hover:text-gold">Master Chef &amp; Tea</a>
+      <a href="#act-rooms" class="mobile-nav-link block py-1.5 text-xs uppercase tracking-[0.22em] text-ivory/85 hover:text-gold">Private Rooms</a>
+      <a href="#act-reservations" class="mobile-nav-link inline-block mt-2 px-5 py-2.5 rounded-full bg-crimson text-ivory text-xs uppercase tracking-[0.22em]">Reserve Table</a>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       ACT 0 — THE GRAND ENTRANCE (SCROLL-PARTING CARVED LATTICE DOORS)
+       ========================================================================= -->
+  <section id="act-entrance" class="relative h-[195vh] bg-obsidian">
+    <div class="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+      <!-- Real Lantern-Lit Restaurant Interior Photo -->
+      <img
+        id="entrance-interior"
+        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=85"
+        alt="Lóng Tíng lantern-lit Chinese dining room"
+        class="absolute inset-0 w-full h-full object-cover will-change-transform"
+        onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=85';"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-obsidian/70 via-obsidian/45 to-obsidian/92"></div>
+
+      <!-- Drifting Steam & Golden Wok Embers Canvas -->
+      <canvas id="entrance-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10" aria-hidden="true"></canvas>
+
+      <!-- Hero Copy Revealed Inside -->
+      <div id="entrance-copy" class="relative z-20 max-w-4xl mx-auto px-6 text-center will-change-transform">
+        <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-obsidian/75 border border-gold/30 backdrop-blur-md mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+          <span class="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-champagne">Est. 1998 &bull; Imperial Gastronomy</span>
+          <span class="font-cn text-vermilion text-xs">御膳房</span>
+        </div>
+
+        <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl text-ivory font-normal leading-[1.02] tracking-tight">
+          Fire, Steam &amp; <span class="italic text-champagne">Imperial</span> Craft
+        </h1>
+
+        <p class="mt-5 max-w-2xl mx-auto text-sm sm:text-base text-ivory/80 leading-relaxed">
+          Step beyond the carved cedar doors into a living Chinese kitchen—where 18-pleat soup dumplings rise in rolling bamboo steam and 315°C carbon-steel woks kiss every dish with authentic <em>Wok Hei</em>.
+        </p>
+
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+          <a href="#act-menu" class="px-8 py-4 rounded-full bg-crimson hover:bg-vermilion text-ivory text-xs uppercase tracking-[0.22em] font-medium shadow-xl shadow-crimson/35 transition-colors">
+            Explore Imperial Menu
+          </a>
+          <a href="#act-kitchen" class="px-8 py-4 rounded-full bg-obsidian/75 hover:bg-obsidian border border-gold/40 text-champagne text-xs uppercase tracking-[0.22em] backdrop-blur-md transition-colors">
+            Watch Kitchen Live
+          </a>
+        </div>
+      </div>
+
+      <!-- Carved Chinese Lattice Doors (Part Left & Right on Scroll) -->
+      <div id="entrance-doors-wrap" class="absolute inset-0 z-30 flex pointer-events-none will-change-opacity">
+        <div id="door-left" class="w-1/2 h-full lattice-door-surface border-r-2 border-gold/45 flex items-center justify-end pr-5 sm:pr-10 will-change-transform">
+          <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full border-2 border-gold/70 bg-obsidian/90 flex items-center justify-center shadow-2xl">
+            <span class="font-cn text-gold text-xl sm:text-2xl">龍</span>
+          </div>
+        </div>
+        <div id="door-right" class="w-1/2 h-full lattice-door-surface border-l-2 border-gold/45 flex items-center justify-start pl-5 sm:pl-10 will-change-transform">
+          <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full border-2 border-gold/70 bg-obsidian/90 flex items-center justify-center shadow-2xl">
+            <span class="font-cn text-gold text-xl sm:text-2xl">庭</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Invitation Cue -->
+      <div id="entrance-scroll-cue" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 transition-opacity duration-300 pointer-events-none">
+        <span class="text-[10px] uppercase tracking-[0.3em] text-champagne">Scroll to Part the Doors</span>
+        <div class="w-5 h-8 rounded-full border border-gold/50 flex items-start justify-center p-1">
+          <span class="w-1 h-2 rounded-full bg-gold animate-bounce"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ACT 1 — LIVE KITCHEN CHRONICLES (CIRCULAR MOON-GATE APERTURE)
+       ========================================================================= -->
+  <section id="act-kitchen" class="relative py-20 lg:py-16 bg-charcoal border-t border-gold/15 subtle-lattice">
+    <div class="kitchen-sticky-stage">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-10 lg:mb-12 reveal-up">
+          <div class="flex items-center justify-center gap-3">
+            <span class="text-xs uppercase tracking-[0.3em] text-gold">Act I &bull; Live Kitchen Chronicles</span>
+            <span class="font-cn text-vermilion text-sm tracking-widest">月洞門御廚</span>
+          </div>
+          <h2 class="font-serif text-4xl sm:text-6xl text-ivory mt-2">Four Realms of Heat</h2>
+          <p class="mt-3 text-sm sm:text-base text-mist">
+            Peer through our traditional Chinese Moon-Gate (<span class="font-cn text-champagne">月洞門</span>) to inspect real culinary heat—from gentle 92°C mountain spring infusions to blistering 315°C wok fire.
+          </p>
+          <div class="hidden lg:inline-flex items-center gap-2 mt-4 px-4 py-1.5 rounded-full bg-obsidian/70 border border-gold/25 text-[10px] uppercase tracking-[0.24em] text-champagne/85">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+            <span>Scroll to Shift Heat Realms &bull; <span id="kitchen-scroll-counter" class="text-ivory font-semibold tabular-nums">01 / 04</span></span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center reveal-up">
+          <!-- Left: Circular Moon-Gate Aperture & Rotating Brass Thermal Ring -->
+          <div class="lg:col-span-6 flex justify-center">
+            <div class="relative w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] flex items-center justify-center">
+              <svg id="moongate-brass-ring" class="moongate-brass-ring absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+                <circle cx="210" cy="210" r="202" stroke="#d4af37" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="4 6" />
+                <circle cx="210" cy="210" r="190" stroke="#d4af37" stroke-opacity="0.7" stroke-width="1.2" />
+                <circle cx="210" cy="14" r="5" fill="#f3d27a" />
+                <circle cx="406" cy="210" r="4" fill="#d4af37" fill-opacity="0.6" />
+                <circle cx="210" cy="406" r="4" fill="#d4af37" fill-opacity="0.6" />
+                <circle cx="14" cy="210" r="4" fill="#d4af37" fill-opacity="0.6" />
+              </svg>
+
+              <!-- Circular Photorealistic Aperture -->
+              <div id="moongate-stage" class="relative w-[256px] h-[256px] sm:w-[356px] sm:h-[356px] rounded-full overflow-hidden border-2 border-gold/60 shadow-2xl shadow-black/90 bg-obsidian">
+                <div class="moongate-layer z-[1]">
+                  <img
+                    id="moongate-img-base"
+                    src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1400&q=85"
+                    alt="The Bamboo Steamer"
+                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=1400&q=85';"
+                  />
+                </div>
+                <div id="moongate-reveal-layer" class="moongate-layer z-[2] pointer-events-none">
+                  <img
+                    id="moongate-img-top"
+                    src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1400&q=85"
+                    alt="The Bamboo Steamer"
+                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=1400&q=85';"
+                  />
+                </div>
+                <canvas id="moongate-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10" aria-hidden="true"></canvas>
+                <div class="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(11,9,8,0.75)] pointer-events-none z-20"></div>
+              </div>
+
+              <!-- Stamping Red Cinnabar Station Seal -->
+              <div id="moongate-seal" class="seal-stamp-target stamped absolute -bottom-2 right-6 sm:right-10 z-30 cinnabar-seal w-11 h-14 rounded-sm flex items-center justify-center font-cn text-xl font-bold select-none">
+                <span id="moongate-seal-char">蒸</span>
+                <span class="seal-ink-halo"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Thermal Telemetry & Clickable Station Selector -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="rounded-3xl bg-obsidian/90 gold-border p-7 sm:p-9 shadow-2xl space-y-5">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <span id="moongate-cn" class="font-cn text-vermilion text-sm tracking-[0.25em]">竹籠點心 • STATION 01</span>
+                <div class="inline-flex items-baseline gap-1.5 px-4 py-1.5 rounded-full bg-charcoal border border-gold/30">
+                  <span id="moongate-temp" class="font-display text-2xl text-champagne tabular-nums">100</span>
+                  <span class="text-xs text-gold">°C</span>
+                </div>
+              </div>
+
+              <h3 id="moongate-title" class="font-serif text-4xl sm:text-5xl text-ivory leading-tight">The Bamboo Steamer</h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div class="p-4 rounded-2xl bg-charcoal/80 border border-gold/15">
+                  <div class="text-[10px] uppercase tracking-[0.22em] text-gold">Technique &amp; Timing</div>
+                  <div id="moongate-duration" class="text-sm text-ivory/90 mt-1">7 Min Rolling Steam</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-charcoal/80 border border-gold/15">
+                  <div class="text-[10px] uppercase tracking-[0.22em] text-gold">Sensory Cue</div>
+                  <div id="moongate-sensory" class="text-sm text-ivory/90 mt-1">Soft hiss of woven cedar lid lifting</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Station Switcher Pills -->
+            <div id="moongate-pills" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ACT 2 — INTERACTIVE BAMBOO STEAMER LID REVEAL
+       ========================================================================= -->
+  <section id="act-steamer" class="relative py-24 sm:py-32 bg-obsidian border-t border-gold/15 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center reveal-up">
+        <!-- Left: Woven Bamboo Steamer Basket & Interactive Lid -->
+        <div class="lg:col-span-6 flex justify-center">
+          <div class="relative w-[290px] h-[290px] sm:w-[370px] sm:h-[370px] rounded-full border-[10px] border-[#5c3e1e] shadow-2xl shadow-black/90 bg-charcoal overflow-visible">
+            <!-- Real Steaming Xiaolongbao Inside -->
+            <div class="relative w-full h-full rounded-full overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85"
+                alt="Freshly steamed Xiaolongbao soup dumplings"
+                class="w-full h-full object-cover"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=1200&q=85';"
+              />
+              <canvas id="steamer-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10" aria-hidden="true"></canvas>
+              <div class="absolute inset-0 rounded-full shadow-[inset_0_0_45px_rgba(11,9,8,0.8)] pointer-events-none z-20"></div>
+            </div>
+
+            <!-- Woven Bamboo Lid (Scrolls & Slides Away) -->
+            <div id="steamer-lid" class="bamboo-lid-texture absolute -inset-2 rounded-full border-4 border-[#8f6739] flex items-center justify-center z-30 will-change-transform">
+              <div class="w-24 h-7 rounded-full bg-[#3b2612] border border-gold/40 shadow-lg flex items-center justify-center">
+                <span class="font-cn text-xs text-champagne tracking-[0.35em]">龍庭</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Steamer Controls & Craftsmanship Copy -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="flex items-center gap-3">
+            <span class="text-xs uppercase tracking-[0.3em] text-gold">Act II &bull; Sensory Unveiling</span>
+            <span class="font-cn text-vermilion text-sm tracking-widest">竹籠揭蓋</span>
+          </div>
+          <h2 class="font-serif text-4xl sm:text-5xl text-ivory leading-tight">
+            18 Pleats of <span class="italic text-champagne">Golden Broth</span>
+          </h2>
+          <p class="text-sm sm:text-base text-mist leading-relaxed">
+            As you scroll—or glide the cedar lid yourself—observe our signature Black Truffle Xiaolongbao emerging from 100°C rolling bamboo steam.
+          </p>
+
+          <div class="rounded-2xl bg-charcoal gold-border p-5 space-y-4">
+            <div class="flex items-center justify-between text-xs">
+              <span class="uppercase tracking-[0.22em] text-gold">Cedar Lid Reveal</span>
+              <span id="steamer-pct-label" class="font-display text-champagne tabular-nums">0% Open</span>
+            </div>
+            <input id="steamer-slider" type="range" min="0" max="100" value="0" aria-label="Slide to open bamboo steamer lid" class="w-full accent-[#d4af37] cursor-pointer" />
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+              <button id="steamer-toggle-btn" type="button" class="px-5 py-2.5 rounded-full bg-crimson hover:bg-vermilion text-ivory text-xs uppercase tracking-[0.2em] font-medium transition-colors">
+                Lift Lid Completely
+              </button>
+              <button type="button" onclick="addToTastingTray('xlb-truffle')" class="px-5 py-2.5 rounded-full bg-obsidian hover:bg-lacquer border border-gold/35 text-champagne text-xs uppercase tracking-[0.2em] transition-colors">
+                + Add Xiaolongbao ($26)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ACT 3 — CURATED IMPERIAL MENU & TASTING TRAY
+       ========================================================================= -->
+  <section id="act-menu" class="relative py-24 sm:py-32 bg-charcoal border-t border-gold/15">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 reveal-up">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs uppercase tracking-[0.3em] text-gold">Act III &bull; Curated Selections</span>
+            <span class="font-cn text-vermilion text-sm tracking-widest">御膳菜單</span>
+          </div>
+          <h2 class="font-serif text-4xl sm:text-6xl text-ivory mt-2">The Imperial Menu</h2>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div id="menu-filters" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Photorealistic Menu Grid -->
+      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-up"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ACT 4 — MASTER CHEF LIANG WEI & INTERACTIVE CEREMONIAL TEA POUR
+       ========================================================================= -->
+  <section id="act-chef" class="relative py-24 sm:py-32 bg-obsidian border-t border-gold/15">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <!-- Chef Editorial Portrait with Animated Cinnabar Seal -->
+        <div class="lg:col-span-5 reveal-up">
+          <div class="relative rounded-3xl overflow-hidden gold-border bg-charcoal shadow-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1200&q=85"
+              alt="Executive Master Chef Liang Wei"
+              class="w-full h-[420px] sm:h-[490px] object-cover object-top"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=85';"
+            />
+            <div class="absolute inset-0 photo-vignette"></div>
+
+            <!-- Cinnabar Seal Stamp -->
+            <div id="chef-seal-stamp" class="seal-stamp-target absolute top-6 right-6 cinnabar-seal w-11 h-16 rounded-sm flex items-center justify-center font-cn text-base font-bold select-none">
+              梁偉印
+              <span class="seal-ink-halo"></span>
+            </div>
+
+            <div class="absolute bottom-6 left-6 right-6">
+              <div class="text-[10px] uppercase tracking-[0.28em] text-gold">Executive Master Chef</div>
+              <div class="font-serif text-3xl text-ivory mt-0.5">Chef Liang Wei <span class="font-cn text-vermilion text-lg ml-1">梁偉</span></div>
+              <div class="text-xs text-mist mt-1">32 Years across Guangzhou, Chengdu &amp; Beijing Imperial Kitchens</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Provenance & Interactive Ceremonial Tea Pour Canvas -->
+        <div class="lg:col-span-7 space-y-7 reveal-up">
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs uppercase tracking-[0.3em] text-gold">Act IV &bull; Lineage &amp; Gongfu Tea</span>
+              <span class="font-cn text-vermilion text-sm tracking-widest">茶道傳承</span>
+            </div>
+            <h2 class="font-serif text-4xl sm:text-5xl text-ivory mt-2 leading-tight">
+              &ldquo;True Chinese cooking is a dialogue between patient curing and a single second of flame.&rdquo;
+            </h2>
+            <p class="mt-4 text-sm sm:text-base text-mist leading-relaxed">
+              Every evening begins with single-estate Menghai Pu-erh poured from seasoned Yixing clay—awakening the palate before the first bamboo basket reaches your table.
+            </p>
+          </div>
+
+          <!-- Interactive Ceremonial Tea Pour Simulation -->
+          <div class="rounded-3xl bg-charcoal gold-border p-5 sm:p-6 shadow-2xl">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div>
+                <div class="text-[10px] uppercase tracking-[0.25em] text-gold">Interactive Gongfu Ceremony</div>
+                <div class="font-serif text-2xl text-ivory">15-Year Vintage Yunnan Pu-erh</div>
+              </div>
+              <button id="pour-tea-btn" type="button" class="px-5 py-2.5 rounded-full bg-crimson hover:bg-vermilion text-ivory text-xs uppercase tracking-[0.2em] font-medium shadow-lg shadow-crimson/25 transition-colors">
+                Pour Ceremonial Tea
+              </button>
+            </div>
+            <div class="relative rounded-2xl overflow-hidden bg-obsidian border border-gold/20 h-[180px] sm:h-[200px]">
+              <canvas id="tea-canvas" class="w-full h-full block"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ACT 5A — PRIVATE DINING ROOMS (SCROLL-DRIVEN ARCHITECTURAL WALKTHROUGH)
+       ========================================================================= -->
+  <section id="act-rooms" class="relative py-20 lg:py-16 bg-charcoal border-t border-gold/15">
+    <div class="rooms-sticky-stage">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 lg:mb-7 reveal-up">
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs uppercase tracking-[0.3em] text-gold">Act V &bull; Architectural Spaces</span>
+              <span class="font-cn text-vermilion text-sm tracking-widest">雅閣廳堂</span>
+            </div>
+            <h2 class="font-serif text-4xl sm:text-5xl text-ivory mt-1.5 leading-tight">Private Dining Rooms</h2>
+          </div>
+          <div class="flex flex-col sm:items-end gap-1.5">
+            <p class="max-w-md text-xs sm:text-sm text-mist leading-relaxed md:text-right">
+              Scroll to walk through three distinct sanctuaries sculpted around silk-lantern glow, front-row wok theater, and cedar acoustics.
+            </p>
+            <div class="hidden lg:inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-champagne/80">
+              <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+              <span>Scroll to Walk Through &bull; <span id="room-scroll-counter" class="text-ivory font-semibold tabular-nums">01 / 03</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room Selector Tabs with Live Scroll Progress Bars -->
+        <div id="room-tabs" class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 reveal-up"></div>
+
+        <!-- Active Room Architectural Showcase Card -->
+        <div class="rounded-3xl overflow-hidden bg-obsidian gold-border shadow-2xl shadow-black/80 grid grid-cols-1 lg:grid-cols-12 reveal-up">
+
+          <!-- Left: Stacked Cedar Sliding-Screen Photo Stage + Bokeh Overlay -->
+          <div class="lg:col-span-7 relative min-h-[290px] sm:min-h-[380px] lg:h-[445px] xl:h-[470px] overflow-hidden bg-obsidian">
+            <!-- Layer 0: The Red Lantern Hall -->
+            <div id="room-layer-0" class="room-photo-layer z-[1]" style="clip-path: inset(0 0 0 0%);">
+              <img
+                id="room-img-0"
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85"
+                alt="The Red Lantern Hall"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85';"
+              />
+            </div>
+
+            <!-- Layer 1: The Chef's Wok Counter -->
+            <div id="room-layer-1" class="room-photo-layer z-[2]" style="clip-path: inset(0 0 0 100%);">
+              <img
+                id="room-img-1"
+                src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=85"
+                alt="The Chef's Wok Counter"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85';"
+              />
+            </div>
+
+            <!-- Layer 2: The Jade Private Suite -->
+            <div id="room-layer-2" class="room-photo-layer z-[3]" style="clip-path: inset(0 0 0 100%);">
+              <img
+                id="room-img-2"
+                src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1400&q=85"
+                alt="The Jade Private Suite"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85';"
+              />
+            </div>
+
+            <!-- Luminous Antique-Gold Vertical Brass Divider Seam -->
+            <div id="room-brass-seam" class="room-brass-seam" aria-hidden="true"></div>
+
+            <!-- Floating Warm Candlelight / Lantern Bokeh Overlay Canvas -->
+            <canvas id="room-bokeh-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20" aria-hidden="true"></canvas>
+
+            <!-- Soft Edge Vignette -->
+            <div class="absolute inset-0 photo-vignette lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-obsidian/90 pointer-events-none z-[22]"></div>
+
+            <!-- Top Badges -->
+            <span id="room-capacity-badge" class="absolute top-5 left-5 z-30 px-4 py-1.5 rounded-full bg-obsidian/80 backdrop-blur-md border border-gold/30 text-[11px] uppercase tracking-[0.2em] text-champagne transition-all duration-300"></span>
+            <span id="room-step-badge" class="absolute bottom-5 left-5 z-30 px-3.5 py-1 rounded-full bg-obsidian/75 backdrop-blur-md border border-gold/25 font-display text-[11px] tracking-[0.25em] text-gold tabular-nums">01 / 03</span>
+          </div>
+
+          <!-- Right: Architectural Dossier with Giant Watermark & Staggered Reveal -->
+          <div class="lg:col-span-5 relative p-7 sm:p-9 flex flex-col justify-between overflow-hidden">
+            <!-- Giant Gliding Background Numeral Watermark -->
+            <div id="room-watermark" aria-hidden="true" class="pointer-events-none select-none absolute -top-4 -right-2 font-display text-[9.5rem] sm:text-[11rem] font-semibold leading-none text-gold/[0.055] will-change-transform">
+              01
+            </div>
+
+            <div class="relative z-10">
+              <div id="room-cn" class="dossier-stagger font-cn text-vermilion text-base tracking-[0.28em]"></div>
+              <h3 id="room-name" class="dossier-stagger font-serif text-4xl sm:text-[2.6rem] text-ivory mt-1.5 leading-tight"></h3>
+              <p id="room-desc" class="dossier-stagger mt-3.5 text-sm text-mist leading-relaxed"></p>
+
+              <div class="dossier-stagger mt-5 space-y-2.5">
+                <div class="text-[10px] uppercase tracking-[0.25em] text-gold">Ambiance Highlights</div>
+                <ul id="room-highlights" class="space-y-2 text-xs sm:text-sm text-ivory/85"></ul>
+              </div>
+            </div>
+
+            <div class="dossier-stagger relative z-10 mt-7 pt-5 border-t border-gold/15 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div class="text-[10px] uppercase tracking-[0.2em] text-mist">Recommended For</div>
+                <div id="room-ideal" class="font-serif text-xl text-champagne mt-0.5"></div>
+              </div>
+              <button id="reserve-room-btn" type="button" class="px-6 py-3.5 rounded-full bg-crimson hover:bg-vermilion text-ivory text-xs uppercase tracking-[0.2em] font-medium shadow-lg shadow-crimson/25 transition-colors">
+                Reserve This Space
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ACT 5B — TABLE RESERVATION & IMPERIAL DIGITAL INVITATION CARD
+       ========================================================================= -->
+  <section id="act-reservations" class="relative py-24 sm:py-32 bg-obsidian border-t border-gold/15">
+    <div class="max-w-4xl mx-auto px-5 sm:px-8">
+
+      <div class="text-center max-w-2xl mx-auto reveal-up">
+        <div class="flex items-center justify-center gap-3">
+          <span class="text-xs uppercase tracking-[0.3em] text-gold">Table Concierge</span>
+          <span class="font-cn text-vermilion text-sm tracking-widest">尊榮訂座</span>
+        </div>
+        <h2 class="font-serif text-4xl sm:text-6xl text-ivory mt-2">Reserve Your Evening</h2>
+        <p class="mt-3 text-sm sm:text-base text-mist">
+          Confirm your seating preferences below to stamp and issue your bespoke Imperial Red &amp; Gold Digital Invitation Card.
+        </p>
+      </div>
+
+      <div class="mt-12 rounded-3xl bg-charcoal/95 gold-border p-6 sm:p-10 shadow-2xl shadow-black/80 reveal-up">
+
+        <!-- Reservation Form -->
+        <form id="reservation-form" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div>
+              <label for="res-date" class="block text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Date</label>
+              <input id="res-date" type="date" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-gold/25 focus:border-gold focus:outline-none text-ivory text-sm" />
+            </div>
+            <div>
+              <label for="res-time" class="block text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Seating Time</label>
+              <select id="res-time" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-gold/25 focus:border-gold focus:outline-none text-ivory text-sm">
+                <option value="5:30 PM">5:30 PM — Twilight Opening</option>
+                <option value="6:30 PM">6:30 PM — First Lantern Glow</option>
+                <option value="7:30 PM" selected>7:30 PM — Prime Evening Service</option>
+                <option value="8:30 PM">8:30 PM — Late Imperial Tasting</option>
+                <option value="9:30 PM">9:30 PM — Supper &amp; Aged Tea</option>
+              </select>
+            </div>
+            <div>
+              <label for="res-guests" class="block text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Party Size</label>
+              <select id="res-guests" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-gold/25 focus:border-gold focus:outline-none text-ivory text-sm">
+                <option value="2 Guests">2 Guests</option>
+                <option value="4 Guests" selected>4 Guests</option>
+                <option value="6 Guests">6 Guests</option>
+                <option value="8 Guests">8 Guests</option>
+                <option value="10–14 Guests (Private Suite)">10–14 Guests (Private Suite)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dining Room Radio Selector -->
+          <div>
+            <span class="block text-[11px] uppercase tracking-[0.2em] text-gold mb-3">Dining Room</span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <label class="cursor-pointer">
+                <input type="radio" name="dining-room" value="The Red Lantern Hall" checked class="sr-only peer" />
+                <div class="p-4 rounded-xl bg-obsidian border border-gold/20 peer-checked:border-gold peer-checked:bg-gold/10 transition-all">
+                  <div class="font-serif text-xl text-ivory">The Red Lantern Hall</div>
+                  <div class="text-xs text-mist mt-0.5">Silk-draped booths &amp; amber glow</div>
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="dining-room" value="The Chef's Wok Counter" class="sr-only peer" />
+                <div class="p-4 rounded-xl bg-obsidian border border-gold/20 peer-checked:border-gold peer-checked:bg-gold/10 transition-all">
+                  <div class="font-serif text-xl text-ivory">The Chef's Wok Counter</div>
+                  <div class="text-xs text-mist mt-0.5">Front-row 315°C wok theater</div>
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="dining-room" value="The Jade Private Suite" class="sr-only peer" />
+                <div class="p-4 rounded-xl bg-obsidian border border-gold/20 peer-checked:border-gold peer-checked:bg-gold/10 transition-all">
+                  <div class="font-serif text-xl text-ivory">The Jade Private Suite</div>
+                  <div class="text-xs text-mist mt-0.5">Dedicated tea master &amp; privacy</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="res-name" class="block text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Guest Name</label>
+              <input id="res-name" type="text" required placeholder="e.g., Evelyn Zhou" class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-gold/25 focus:border-gold focus:outline-none text-ivory placeholder-mist/45 text-sm" />
+            </div>
+            <div>
+              <label for="res-contact" class="block text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Email or Phone</label>
+              <input id="res-contact" type="text" required placeholder="evelyn@example.com" class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-gold/25 focus:border-gold focus:outline-none text-ivory placeholder-mist/45 text-sm" />
+            </div>
+          </div>
+
+          <!-- Attached Tasting Tray Summary -->
+          <div id="res-tray-summary-wrap" class="hidden p-4 rounded-2xl bg-crimson/10 border border-crimson/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.22em] text-gold">Attached From Tasting Tray</div>
+              <div id="res-tray-summary-text" class="text-xs text-ivory/90 mt-1"></div>
+            </div>
+            <button type="button" id="edit-attached-tray-btn" class="text-[11px] uppercase tracking-wider text-champagne hover:text-gold underline self-start sm:self-center">Edit Tray</button>
+          </div>
+
+          <div>
+            <label for="res-notes" class="block text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Tasting Notes &amp; Special Occasions</label>
+            <textarea id="res-notes" rows="3" placeholder="Allergies, anniversary celebration, or whole 48-hour Peking Duck pre-order..." class="w-full px-4 py-3.5 rounded-xl bg-obsidian border border-gold/25 focus:border-gold focus:outline-none text-ivory placeholder-mist/45 text-sm"></textarea>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-mist">Whole 48-hour Imperial Peking Duck is roasted to order; pre-selection is warmly encouraged.</p>
+            <button type="submit" class="w-full sm:w-auto px-9 py-4 rounded-full bg-crimson hover:bg-vermilion text-ivory text-xs uppercase tracking-[0.22em] font-medium shadow-xl shadow-crimson/30 transition-colors">
+              Stamp &amp; Issue Invitation
+            </button>
+          </div>
+        </form>
+
+        <!-- BESPOKE DIGITAL IMPERIAL INVITATION CARD -->
+        <div id="invitation-card" class="hidden">
+          <div class="relative rounded-2xl overflow-hidden border-2 border-gold/65 bg-gradient-to-br from-[#2c0909] via-[#170707] to-[#0b0908] p-7 sm:p-10 text-center shadow-2xl">
+            <div class="absolute inset-3 border border-gold/30 rounded-xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-5">
+              <!-- Animated Cinnabar Seal Stamp -->
+              <div id="invitation-seal-stamp" class="seal-stamp-target relative mx-auto cinnabar-seal w-12 h-16 rounded-sm flex items-center justify-center font-cn text-base font-bold select-none">
+                御請函
+                <span class="seal-ink-halo"></span>
+              </div>
+
+              <div>
+                <div class="text-[10px] uppercase tracking-[0.35em] text-gold">Imperial Dining Invitation</div>
+                <h3 class="font-serif text-4xl sm:text-5xl text-ivory mt-2">
+                  Honored Guest, <span id="inv-name" class="italic text-champagne"></span>
+                </h3>
+              </div>
+
+              <div class="gold-divider max-w-xs mx-auto"></div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto text-left bg-obsidian/70 border border-gold/25 rounded-2xl p-5">
+                <div>
+                  <div class="text-[10px] uppercase tracking-[0.22em] text-gold">Date &amp; Time</div>
+                  <div id="inv-datetime" class="font-serif text-xl text-ivory mt-0.5"></div>
+                </div>
+                <div>
+                  <div class="text-[10px] uppercase tracking-[0.22em] text-gold">Dining Room</div>
+                  <div id="inv-room" class="font-serif text-xl text-ivory mt-0.5"></div>
+                </div>
+                <div>
+                  <div class="text-[10px] uppercase tracking-[0.22em] text-gold">Party</div>
+                  <div id="inv-guests" class="font-serif text-xl text-ivory mt-0.5"></div>
+                </div>
+              </div>
+
+              <div id="inv-dishes-wrap" class="hidden max-w-2xl mx-auto text-left bg-obsidian/55 border border-gold/20 rounded-xl px-5 py-3">
+                <span class="text-[10px] uppercase tracking-[0.22em] text-gold">Pre-Selected Tasting: </span>
+                <span id="inv-dishes" class="text-xs text-ivory/90"></span>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <div class="px-5 py-2.5 rounded-full bg-obsidian/90 border border-gold/45 text-xs uppercase tracking-[0.24em] text-champagne">
+                  Booking Code: <span id="inv-code" class="font-semibold text-ivory"></span>
+                </div>
+                <button id="copy-code-btn" type="button" class="px-4 py-2.5 rounded-full bg-gold/15 hover:bg-gold/25 border border-gold/40 text-xs uppercase tracking-[0.18em] text-champagne transition-colors">
+                  Copy Code
+                </button>
+              </div>
+
+              <div class="pt-2">
+                <button id="reset-reservation-btn" type="button" class="text-xs uppercase tracking-[0.22em] text-mist hover:text-gold underline transition-colors">
+                  Modify Reservation Details
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       FOOTER WITH LIVE KITCHEN STATUS
+       ========================================================================= -->
+  <footer class="bg-charcoal border-t border-gold/15 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-gold/15">
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3.5">
+            <div class="cinnabar-seal w-8 h-10 rounded-sm flex items-center justify-center font-cn text-xs font-bold">龍庭</div>
+            <div>
+              <div class="font-display text-xl tracking-[0.22em] text-ivory">LÓNG TÍNG</div>
+              <div class="text-[10px] uppercase tracking-[0.28em] text-gold/80">Modern Imperial Chinese Kitchen</div>
+            </div>
+          </div>
+          <p class="text-sm text-mist max-w-md leading-relaxed">
+            A sanctuary of Cantonese dim sum artistry, Sichuan spice architecture, and 48-hour jujube-wood imperial roasting.
+          </p>
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-obsidian border border-gold/25">
+            <span id="kitchen-status-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="kitchen-status-text" class="text-[11px] uppercase tracking-[0.18em] text-ivory/90">Kitchen Live</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs uppercase tracking-[0.22em] text-gold mb-4">Service Hours</h4>
+          <ul class="space-y-2 text-sm text-mist">
+            <li>Tue – Thu: 5:30 PM – 10:30 PM</li>
+            <li>Fri – Sat: 5:00 PM – 11:30 PM</li>
+            <li>Sun Dim Sum: 11:30 AM – 9:30 PM</li>
+            <li class="text-ivory/55">Mon: Broth &amp; 48h Duck Curing</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs uppercase tracking-[0.22em] text-gold mb-4">Concierge</h4>
+          <ul class="space-y-2 text-sm text-mist">
+            <li>88 Jade Pavilion Lane, Heritage Quarter</li>
+            <li>+1 (212) 555-0198</li>
+            <li>concierge@longtingkitchen.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-mist/70">
+        <div>&copy; 2026 Lóng Tíng (龍庭). All rights reserved.</div>
+        <div class="font-cn tracking-[0.35em] text-gold/60">色香味俱全</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       DISH QUICK-VIEW MODAL
+       ========================================================================= -->
+  <div id="dish-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md">
+    <div class="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-charcoal gold-border shadow-2xl grid grid-cols-1 md:grid-cols-12 max-h-[92vh] overflow-y-auto">
+      <button id="close-modal-btn" type="button" aria-label="Close Dish Modal" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-obsidian/85 hover:bg-crimson text-ivory border border-gold/30 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="md:col-span-6 relative min-h-[260px] md:min-h-full bg-obsidian">
+        <img id="modal-img" src="" alt="" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 photo-vignette md:hidden"></div>
+      </div>
+
+      <div class="md:col-span-6 p-6 sm:p-8 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2">
+            <span id="modal-category" class="text-[11px] uppercase tracking-[0.22em] text-gold"></span>
+            <div id="modal-spice" class="flex items-center gap-1"></div>
+          </div>
+          <div id="modal-cn" class="font-cn text-vermilion text-base mt-2 tracking-widest"></div>
+          <h3 id="modal-title" class="font-serif text-4xl text-ivory mt-1 leading-tight"></h3>
+          <div class="flex items-center gap-3 mt-2">
+            <span id="modal-price" class="font-serif text-3xl text-champagne"></span>
+            <span id="modal-tags" class="flex flex-wrap gap-1.5"></span>
+          </div>
+
+          <p id="modal-desc" class="mt-4 text-sm text-mist leading-relaxed"></p>
+
+          <div class="mt-5 p-4 rounded-2xl bg-obsidian/80 border border-gold/15 space-y-2.5">
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.2em] text-gold">Chef's Tasting Notes</div>
+              <div id="modal-notes" class="text-xs text-ivory/90 mt-0.5 leading-relaxed"></div>
+            </div>
+            <div class="gold-divider"></div>
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.2em] text-gold">Recommended Tea Pairing</div>
+              <div id="modal-pairing" class="text-xs text-champagne mt-0.5"></div>
+            </div>
+          </div>
+        </div>
+
+        <button id="modal-add-btn" type="button" class="mt-6 w-full py-3.5 rounded-full bg-crimson hover:bg-vermilion text-ivory text-xs uppercase tracking-[0.2em] font-medium shadow-lg shadow-crimson/25 transition-colors">
+          Add to Tasting Tray
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SLIDE-OVER TASTING TRAY DRAWER
+       ========================================================================= -->
+  <div id="tray-backdrop" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm">
+    <aside id="tray-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-charcoal border-l border-gold/25 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out">
+      <div class="p-6 border-b border-gold/15 flex items-center justify-between">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.25em] text-gold">Curated For Your Table</div>
+          <h3 class="font-serif text-3xl text-ivory mt-0.5">Your Tasting Tray</h3>
+        </div>
+        <button id="close-tray-btn" type="button" aria-label="Close Tasting Tray" class="w-9 h-9 rounded-full bg-obsidian border border-gold/25 hover:border-gold text-ivory flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="tray-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+
+      <div class="p-6 border-t border-gold/15 bg-obsidian/85 space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-mist uppercase tracking-[0.2em] text-xs">Estimated Tasting Total</span>
+          <span id="tray-total" class="font-serif text-3xl text-champagne">$0</span>
+        </div>
+        <button id="attach-to-res-btn" type="button" class="w-full py-3.5 rounded-full bg-crimson hover:bg-vermilion text-ivory text-xs uppercase tracking-[0.2em] font-medium shadow-lg shadow-crimson/25 transition-colors">
+          Attach to Reservation
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-4 transition-all duration-300">
+    <div class="px-5 py-3 rounded-full bg-charcoal/95 border border-gold/45 shadow-2xl flex items-center gap-2.5 text-xs tracking-wider text-ivory">
+      <span class="w-2 h-2 rounded-full bg-gold"></span>
+      <span id="toast-msg">Updated</span>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       COMPLETE, SELF-CONTAINED APPLICATION JAVASCRIPT
+       ========================================================================= -->
+  <script>
+    const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const HAS_FINE_POINTER = window.matchMedia('(pointer: fine)').matches;
+    const FALLBACK_FOOD_IMG = 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85';
+
+    // Global Application State
+    let activeChronicleIndex = 0;
+    let activeCategory = 'All';
+    let activeRoomIndex = 0;
+    let activeModalDishId = null;
+    let tastingCart = [];
+    let isAmbiencePlaying = false;
+    let manualSteamerOverride = null;
+    let steamerOpenAmount = 0;
+
+    // -------------------------------------------------------------------------
+    // 1. DATA CATALOGS (PHOTOREALISTIC UNSPLASH PHOTOGRAPHY + FALLBACKS)
+    // -------------------------------------------------------------------------
+    const CHRONICLE_STAGES = [
+      {
+        char: '蒸',
+        cn: '竹籠點心 • STATION 01',
+        title: 'The Bamboo Steamer',
+        temp: 100,
+        ringDeg: 0,
+        duration: '7 Min Rolling Steam',
+        sensory: 'Soft hiss of woven cedar lid lifting',
+        image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1400&q=85',
+        fallback: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=1400&q=85'
+      },
+      {
+        char: '炒',
+        cn: '鑊氣焦香 • STATION 02',
+        title: 'Breath of the Wok (Wok Hei)',
+        temp: 315,
+        ringDeg: -90,
+        duration: '45 Sec Jet-Flame Sear',
+        sensory: 'Sharp sear of aged Shaoxing wine & flame',
+        image: 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=1400&q=85',
+        fallback: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1400&q=85'
+      },
+      {
+        char: '烤',
+        cn: '皇朝烤鴨 • STATION 03',
+        title: 'Imperial Roast Duck',
+        temp: 220,
+        ringDeg: -180,
+        duration: '48h Cure • Jujube Hearth',
+        sensory: 'Crisp crackle of lacquered skin under blade',
+        image: 'https://images.unsplash.com/photo-1518492104633-130d0cc84637?auto=format&fit=crop&w=1400&q=85',
+        fallback: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=1400&q=85'
+      },
+      {
+        char: '沏',
+        cn: '工夫茶道 • STATION 04',
+        title: 'Ceremonial Tea Pour',
+        temp: 92,
+        ringDeg: -270,
+        duration: '25 Sec Yixing Steep',
+        sensory: 'Warm roasted orchid & mountain mist',
+        image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1400&q=85',
+        fallback: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1400&q=85'
+      }
+    ];
+
+    const DISHES = [
+      {
+        id: 'xlb-truffle',
+        name: 'Black Truffle Xiaolongbao',
+        cn: '黑松露小籠包',
+        origin: 'Shanghai',
+        category: 'Dim Sum',
+        price: 26,
+        spice: 0,
+        tags: ['18-Pleat', 'Signature'],
+        image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Hand-pleated heritage pork soup dumplings infused with shaved Périgord black truffle and 12-hour golden bone broth.',
+        notes: 'Paper-thin skin bursting with savory truffle broth; served in cedar bamboo with aged Zhenjiang black vinegar and ginger.',
+        pairing: '2016 Wuyi Da Hong Pao Rock Oolong'
+      },
+      {
+        id: 'peking-duck',
+        name: '48-Hour Imperial Peking Duck',
+        cn: '御膳北京烤鴨',
+        origin: 'Beijing',
+        category: 'Imperial Roasts',
+        price: 98,
+        spice: 0,
+        tags: ['Tableside', 'Signature'],
+        image: 'https://images.unsplash.com/photo-1518492104633-130d0cc84637?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Jujube wood-roasted whole lacquered duck carved tableside with warm lotus pancakes, house hoisin, cucumber, and scallion.',
+        notes: 'Glass-crisp mahogany skin with fragrant fruitwood smoke and succulent slow-cured meat.',
+        pairing: '15-Year Cellar Yunnan Shu Pu-erh'
+      },
+      {
+        id: 'dan-dan-noodles',
+        name: 'Sichuan Hand-Pulled Dan Dan',
+        cn: '成都手工擔擔麵',
+        origin: 'Chengdu',
+        category: 'Wok & Noodles',
+        price: 24,
+        spice: 3,
+        tags: ['Mala', 'Hand-Pulled'],
+        image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Springy hand-pulled wheat noodles tossed in roasted sesame paste, house chili oil, crispy pork, and Sichuan ya cai.',
+        notes: 'Vibrant citrus-numbing tingle of Hanyuan red peppercorns balanced with nutty sesame and pickled mustard greens.',
+        pairing: 'Chilled Osmanthus Jasmine Cold Brew'
+      },
+      {
+        id: 'kung-pao-chicken',
+        name: 'Wok-Seared Imperial Kung Pao',
+        cn: '宮保雞丁',
+        origin: 'Sichuan',
+        category: 'Wok & Noodles',
+        price: 36,
+        spice: 2,
+        tags: ['Wok Hei', 'GF Option'],
+        image: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Free-range chicken flash-seared at 315°C with blistered Erjingtiao chilies, glazed cashews, and aged black vinegar glaze.',
+        notes: 'Classic sweet-tart-spicy lychee flavor profile wrapped in unmistakable smoky carbon-steel wok aroma.',
+        pairing: 'High-Mountain Alishan Oolong'
+      },
+      {
+        id: 'honey-char-siu',
+        name: 'Lychee-Glazed Iberico Char Siu',
+        cn: '荔枝蜜汁叉燒',
+        origin: 'Canton',
+        category: 'Imperial Roasts',
+        price: 44,
+        spice: 0,
+        tags: ['Charcoal Roast', 'House Glaze'],
+        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Marbled Iberico pork collar marinated in fermented red bean curd, roasted over binchotan, and torched with wild lychee honey.',
+        notes: 'Caramelized smoky edges giving way to tender, melt-in-mouth richness balanced by pickled plum.',
+        pairing: 'West Lake Longjing Green Tea'
+      },
+      {
+        id: 'wagyu-hotpot',
+        name: 'A5 Wagyu Mala Wok Noodles',
+        cn: '和牛麻辣御麵',
+        origin: 'Chongqing',
+        category: 'Wok & Noodles',
+        price: 64,
+        spice: 3,
+        tags: ['Wok Hei', 'A5 Wagyu'],
+        image: 'https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Simmering crimson Sichuan broth steeped with twenty-four botanicals, poached Miyazaki A5 Wagyu ribbons, and hand-cut noodles.',
+        notes: 'Velvety marbled beef bathed in aromatic star anise, black cardamom, and numbing peppercorn heat.',
+        pairing: 'Chilled Snow Pear & Chrysanthemum Elixir'
+      },
+      {
+        id: 'crystal-har-gow',
+        name: 'Crystal Tiger Prawn Har Gow',
+        cn: '翡翠鮮蝦餃',
+        origin: 'Guangzhou',
+        category: 'Dim Sum',
+        price: 22,
+        spice: 0,
+        tags: ['Steamed', 'GF'],
+        image: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Translucent hand-pressed dumplings showcasing sweet wild tiger prawns, Hokkaido scallop, and crisp water chestnut.',
+        notes: 'Delicate bouncy snap with clean ocean sweetness and subtle white-pepper warmth.',
+        pairing: 'Silver Needle White Tea'
+      },
+      {
+        id: 'yunnan-puerh',
+        name: 'Smoked 15-Year Yunnan Pu-erh',
+        cn: '十五年陳香普洱',
+        origin: 'Menghai',
+        category: 'Teas & Elixirs',
+        price: 28,
+        spice: 0,
+        tags: ['Gongfu Service', 'Vintage'],
+        image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&q=85',
+        desc: 'Ancient-tree Menghai Pu-erh steeped tableside in seasoned Yixing clay with 92°C mountain spring water across five infusions.',
+        notes: 'Silky dark-amber liquor with notes of toasted jujube, cedar bark, and sweet earth.',
+        pairing: 'Ideal accompaniment to Peking Duck & Dim Sum'
+      }
+    ];
+
+    const DINING_ROOMS = [
+      {
+        id: 'lantern-hall',
+        num: '01',
+        name: 'The Red Lantern Hall',
+        cn: '紅燈主廳',
+        capacity: '2 – 6 Guests • Main Sanctuary',
+        ideal: 'Intimate Dinners & Celebrations',
+        photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85',
+        bokehRgb: [243, 210, 122],
+        bokehAccentRgb: [200, 35, 35],
+        desc: 'Our signature dining hall bathed in warm silk-lantern glow, featuring curved ebony booths, carved lattice screens, and hushed acoustics.',
+        highlights: [
+          'Hand-crafted silk lanterns casting soft amber candlelight',
+          'Full tableside Peking Duck carving & Gongfu tea service',
+          'Plush velvet banquettes spaced for unhurried conversation'
+        ]
+      },
+      {
+        id: 'wok-counter',
+        num: '02',
+        name: "The Chef's Wok Counter",
+        cn: '御廚火檯',
+        capacity: '1 – 4 Guests • 10 Seats Only',
+        ideal: 'Culinary Enthusiasts & Tasting Flights',
+        photo: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=85',
+        bokehRgb: [255, 174, 66],
+        bokehAccentRgb: [212, 175, 55],
+        desc: 'Front-row seats along honed black-marble overlooking our open carbon-steel wok hearth and steaming bamboo basket wall.',
+        highlights: [
+          'Direct view of 315°C Wok Hei flame choreography',
+          'Chef-curated off-menu dim sum bites served straight from bamboo',
+          'Interactive dialogue with our senior kitchen brigade'
+        ]
+      },
+      {
+        id: 'jade-suite',
+        num: '03',
+        name: 'The Jade Private Suite',
+        cn: '翠玉雅閣',
+        capacity: '8 – 14 Guests • Fully Private',
+        ideal: 'Executive Banquets & Family Feasts',
+        photo: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1400&q=85',
+        bokehRgb: [130, 214, 180],
+        bokehAccentRgb: [243, 210, 122],
+        desc: 'An enclosed sanctuary framed by antique celadon ceramics, a custom banquet table, and a dedicated tea sommelier.',
+        highlights: [
+          'Dedicated tea master & bespoke 8-course Imperial Banquet menu',
+          'Sound-insulated cedar sliding doors for total discretion',
+          'Private cellar access to vintage Baijiu & 1998 Pu-erh cakes'
+        ]
+      }
+    ];
+
+    // -------------------------------------------------------------------------
+    // 2. HANGING SILK LANTERNS — DAMPED SCROLL-VELOCITY PENDULUM PHYSICS
+    // -------------------------------------------------------------------------
+    function initHangingLanternPhysics() {
+      const leftBody = document.getElementById('lantern-left-body');
+      const leftTassel = document.getElementById('lantern-left-tassel');
+      const rightBody = document.getElementById('lantern-right-body');
+      const rightTassel = document.getElementById('lantern-right-tassel');
+      if (!leftBody || !rightBody || REDUCED_MOTION) return;
+
+      let angleL = 0, velL = 0, tasselL = 0, tVelL = 0;
+      let angleR = 0, velR = 0, tasselR = 0, tVelR = 0;
+      let lastScrollY = window.scrollY;
+      let t = 0;
+
+      function step() {
+        t += 0.018;
+        const curScrollY = window.scrollY;
+        const scrollDelta = Math.max(-70, Math.min(70, curScrollY - lastScrollY));
+        lastScrollY = curScrollY;
+
+        // Scroll impulse kicks left and right lanterns slightly asymmetrically
+        velL += scrollDelta * 0.032;
+        velR -= scrollDelta * 0.028;
+
+        // Organic ambient breeze target
+        const breezeL = Math.sin(t * 0.9) * 1.4;
+        const breezeR = Math.cos(t * 0.85 + 0.7) * 1.4;
+
+        // Damped harmonic spring for lantern bodies
+        velL += (breezeL - angleL) * 0.032;
+        velL *= 0.92;
+        angleL = Math.max(-22, Math.min(22, angleL + velL));
+
+        velR += (breezeR - angleR) * 0.032;
+        velR *= 0.92;
+        angleR = Math.max(-22, Math.min(22, angleR + velR));
+
+        // Secondary follow-through inertia for silk tassels
+        tVelL += (-angleL * 0.85 - tasselL) * 0.06;
+        tVelL *= 0.88;
+        tasselL = Math.max(-28, Math.min(28, tasselL + tVelL));
+
+        tVelR += (-angleR * 0.85 - tasselR) * 0.06;
+        tVelR *= 0.88;
+        tasselR = Math.max(-28, Math.min(28, tasselR + tVelR));
+
+        leftBody.style.transform = `rotate(${angleL.toFixed(2)}deg)`;
+        if (leftTassel) leftTassel.style.transform = `rotate(${tasselL.toFixed(2)}deg)`;
+
+        rightBody.style.transform = `rotate(${angleR.toFixed(2)}deg)`;
+        if (rightTassel) rightTassel.style.transform = `rotate(${tasselR.toFixed(2)}deg)`;
+
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // -------------------------------------------------------------------------
+    // 3. SPARKLING GOLDEN WOK-EMBER MOUSE TRAIL & WARM LANTERN HALO
+    // -------------------------------------------------------------------------
+    function initSparklingMouseTrail() {
+      const canvas = document.getElementById('sparkle-canvas');
+      const halo = document.getElementById('pointer-halo');
+      if (!canvas || !HAS_FINE_POINTER || REDUCED_MOTION) return;
+
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0;
+      const particles = [];
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      let lastX = -100, lastY = -100;
+
+      function spawnSparks(x, y, count = 2, burst = false) {
+        const colors = ['#f3d27a', '#d4af37', '#fff4d2', '#c82323'];
+        for (let i = 0; i < count; i++) {
+          const ang = Math.random() * Math.PI * 2;
+          const speed = burst ? 1.2 + Math.random() * 3.2 : 0.3 + Math.random() * 1.1;
+          particles.push({
+            x: x + (Math.random() - 0.5) * 8,
+            y: y + (Math.random() - 0.5) * 8,
+            vx: Math.cos(ang) * speed,
+            vy: Math.sin(ang) * speed - (burst ? 0.8 : 0.55),
+            size: burst ? 2.2 + Math.random() * 3.2 : 1.5 + Math.random() * 2.5,
+            alpha: 0.95,
+            decay: burst ? 0.02 + Math.random() * 0.015 : 0.024 + Math.random() * 0.02,
+            color: colors[Math.floor(Math.random() * (burst ? 3 : 4))],
+            star: Math.random() > 0.38,
+            rot: Math.random() * Math.PI
+          });
+        }
+        if (particles.length > 140) particles.splice(0, particles.length - 140);
+      }
+
+      window.addEventListener('pointermove', (e) => {
+        if (halo) {
+          halo.style.opacity = '1';
+          halo.style.transform = `translate3d(${e.clientX - 130}px, ${e.clientY - 130}px, 0)`;
+        }
+        const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+        if (dist > 7) {
+          spawnSparks(e.clientX, e.clientY, dist > 28 ? 3 : 1, false);
+          lastX = e.clientX;
+          lastY = e.clientY;
+        }
+      });
+
+      window.addEventListener('pointerdown', (e) => {
+        spawnSparks(e.clientX, e.clientY, 14, true);
+      });
+
+      document.addEventListener('mouseleave', () => {
+        if (halo) halo.style.opacity = '0';
+      });
+
+      function drawStar(x, y, r, rot, color, alpha) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rot);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        for (let i = 0; i < 4; i++) {
+          const a = (i * Math.PI) / 2;
+          ctx.lineTo(Math.cos(a) * r * 1.9, Math.sin(a) * r * 1.9);
+          ctx.lineTo(Math.cos(a + Math.PI / 4) * r * 0.42, Math.sin(a + Math.PI / 4) * r * 0.42);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy -= 0.015; // Gentle upward thermal drift
+          p.vx *= 0.98;
+          p.alpha -= p.decay;
+          p.rot += 0.06;
+
+          if (p.alpha <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          if (p.star) {
+            drawStar(p.x, p.y, p.size, p.rot, p.color, p.alpha);
+          } else {
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * 0.75, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. WEB AUDIO API PENTATONIC GUZHENG AMBIENCE
+    // -------------------------------------------------------------------------
+    let audioCtx = null;
+    let guzhengTimer = null;
+    const PENTATONIC_HZ = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25];
+
+    function playGuzhengPluck(freqOverride = null) {
+      try {
+        if (!audioCtx) {
+          const Ctx = window.AudioContext || window.webkitAudioContext;
+          if (!Ctx) return;
+          audioCtx = new Ctx();
+        }
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const freq = freqOverride || PENTATONIC_HZ[Math.floor(Math.random() * PENTATONIC_HZ.length)];
+
+        const osc = audioCtx.createOscillator();
+        const overtone = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+        overtone.type = 'sine';
+        overtone.frequency.setValueAtTime(freq * 2, now);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2200, now);
+        filter.frequency.exponentialRampToValueAtTime(420, now + 1.8);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.065, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0008, now + 2.2);
+
+        osc.connect(filter);
+        overtone.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        overtone.start(now);
+        osc.stop(now + 2.25);
+        overtone.stop(now + 2.25);
+      } catch (err) {
+        // Silently ignore audio restrictions
+      }
+    }
+
+    function initAmbienceToggle() {
+      const btn = document.getElementById('ambience-btn');
+      const label = document.getElementById('ambience-label');
+      if (!btn) return;
+
+      btn.addEventListener('click', () => {
+        isAmbiencePlaying = !isAmbiencePlaying;
+        if (isAmbiencePlaying) {
+          btn.classList.add('audio-active', 'border-gold');
+          if (label) label.textContent = 'Playing';
+          playGuzhengPluck(392.0);
+          guzhengTimer = setInterval(() => {
+            if (isAmbiencePlaying) playGuzhengPluck();
+          }, 2600);
+          showToast('Guzheng soundscape enabled');
+        } else {
+          btn.classList.remove('audio-active', 'border-gold');
+          if (label) label.textContent = 'Guzheng';
+          clearInterval(guzhengTimer);
+          showToast('Guzheng soundscape paused');
+        }
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. ACT 0: GRAND ENTRANCE AMBIENT STEAM & WOK EMBERS CANVAS
+    // -------------------------------------------------------------------------
+    function initEntranceCanvas() {
+      const canvas = document.getElementById('entrance-canvas');
+      if (!canvas || REDUCED_MOTION) return;
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0;
+
+      function resize() {
+        w = canvas.width = canvas.offsetWidth || window.innerWidth;
+        h = canvas.height = canvas.offsetHeight || window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const embers = Array.from({ length: 34 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: 1 + Math.random() * 2.2,
+        vy: -(0.3 + Math.random() * 0.7),
+        vx: (Math.random() - 0.5) * 0.35,
+        a: 0.2 + Math.random() * 0.65
+      }));
+
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+        embers.forEach((e) => {
+          e.y += e.vy;
+          e.x += e.vx + Math.sin(e.y * 0.015) * 0.2;
+          if (e.y < -10) {
+            e.y = h + 10;
+            e.x = Math.random() * w;
+          }
+          ctx.fillStyle = `rgba(243, 210, 122, ${e.a})`;
+          ctx.beginPath();
+          ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // -------------------------------------------------------------------------
+    // 6. ACT 1: CIRCULAR MOON-GATE LIVE KITCHEN CHRONICLES
+    // -------------------------------------------------------------------------
+    function initMoonGateChronicles() {
+      const pillsEl = document.getElementById('moongate-pills');
+      const ringEl = document.getElementById('moongate-brass-ring');
+      const baseImg = document.getElementById('moongate-img-base');
+      const topLayer = document.getElementById('moongate-reveal-layer');
+      const topImg = document.getElementById('moongate-img-top');
+      const sealEl = document.getElementById('moongate-seal');
+      const sealChar = document.getElementById('moongate-seal-char');
+      const cnEl = document.getElementById('moongate-cn');
+      const titleEl = document.getElementById('moongate-title');
+      const tempEl = document.getElementById('moongate-temp');
+      const durEl = document.getElementById('moongate-duration');
+      const sensEl = document.getElementById('moongate-sensory');
+      const counterEl = document.getElementById('kitchen-scroll-counter');
+      if (!pillsEl) return;
+
+      function buildPills() {
+        pillsEl.innerHTML = CHRONICLE_STAGES.map(
+          (st, idx) => `
+          <button
+            id="moongate-pill-${idx}"
+            type="button"
+            onclick="selectChronicleStage(${idx})"
+            class="relative overflow-hidden p-3.5 rounded-2xl border text-left transition-all ${
+              idx === activeChronicleIndex
+                ? 'bg-obsidian border-gold shadow-lg shadow-gold/10 opacity-100'
+                : 'bg-obsidian/55 border-gold/15 hover:border-gold/45 opacity-80 hover:opacity-100'
+            }"
+          >
+            <div class="flex items-center justify-between">
+              <span id="moongate-pill-char-${idx}" class="font-cn text-lg ${idx === activeChronicleIndex ? 'text-vermilion' : 'text-gold/75'}">${st.char}</span>
+              <span class="text-[11px] font-display text-champagne tabular-nums">${st.temp}°C</span>
+            </div>
+            <div class="text-xs text-ivory mt-1 truncate">${st.title}</div>
+            <div class="room-tab-progress-track">
+              <div id="moongate-progress-${idx}" class="room-tab-progress-fill" style="width: ${idx === 0 ? '100%' : '0%'};"></div>
+            </div>
+          </button>
+        `
+        ).join('');
+      }
+
+      function updatePillStyles() {
+        CHRONICLE_STAGES.forEach((_, idx) => {
+          const btn = document.getElementById(`moongate-pill-${idx}`);
+          const ch = document.getElementById(`moongate-pill-char-${idx}`);
+          if (!btn) return;
+          if (idx === activeChronicleIndex) {
+            btn.classList.add('bg-obsidian', 'border-gold', 'shadow-lg', 'shadow-gold/10', 'opacity-100');
+            btn.classList.remove('bg-obsidian/55', 'border-gold/15', 'opacity-80');
+            if (ch) {
+              ch.classList.add('text-vermilion');
+              ch.classList.remove('text-gold/75');
+            }
+          } else {
+            btn.classList.remove('bg-obsidian', 'border-gold', 'shadow-lg', 'shadow-gold/10', 'opacity-100');
+            btn.classList.add('bg-obsidian/55', 'border-gold/15', 'opacity-80');
+            if (ch) {
+              ch.classList.remove('text-vermilion');
+              ch.classList.add('text-gold/75');
+            }
+          }
+        });
+      }
+
+      window.applyChronicleStage = function (idx, fromScroll = false) {
+        if (idx === activeChronicleIndex) return;
+        const prev = CHRONICLE_STAGES[activeChronicleIndex];
+        const next = CHRONICLE_STAGES[idx];
+        activeChronicleIndex = idx;
+
+        if (baseImg) {
+          baseImg.src = prev.image;
+          baseImg.onerror = () => { baseImg.src = prev.fallback; };
+        }
+        if (topImg && topLayer) {
+          topImg.src = next.image;
+          topImg.alt = next.title;
+          topImg.onerror = () => { topImg.src = next.fallback; };
+          topLayer.classList.remove('is-expanding');
+          void topLayer.offsetWidth;
+          topLayer.classList.add('is-expanding');
+        }
+        // On mobile or click-only mode, snap-rotate the ring smoothly via CSS
+        if (ringEl && !fromScroll) {
+          ringEl.style.transform = `rotate(${next.ringDeg}deg)`;
+        }
+        if (cnEl) cnEl.textContent = next.cn;
+        if (titleEl) titleEl.textContent = next.title;
+        if (tempEl) tempEl.textContent = next.temp;
+        if (durEl) durEl.textContent = next.duration;
+        if (sensEl) sensEl.textContent = next.sensory;
+        if (counterEl) counterEl.textContent = `0${idx + 1} / 04`;
+        if (sealChar) sealChar.textContent = next.char;
+        if (sealEl) {
+          sealEl.classList.remove('stamped');
+          void sealEl.offsetWidth;
+          sealEl.classList.add('stamped');
+        }
+
+        updatePillStyles();
+        if (!fromScroll) {
+          CHRONICLE_STAGES.forEach((_, i) => {
+            const fill = document.getElementById(`moongate-progress-${i}`);
+            if (fill) fill.style.width = i === idx ? '100%' : '0%';
+          });
+        }
+        if (isAmbiencePlaying) playGuzhengPluck();
+      };
+
+      window.selectChronicleStage = function (idx) {
+        const kitchenSec = document.getElementById('act-kitchen');
+        if (kitchenSec && window.innerWidth >= 1024 && !REDUCED_MOTION) {
+          const focalPoints = [0.06, 0.36, 0.64, 0.94];
+          const secTop = kitchenSec.getBoundingClientRect().top + window.scrollY;
+          const travel = Math.max(1, kitchenSec.offsetHeight - window.innerHeight);
+          const targetY = secTop + travel * focalPoints[idx];
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+          if (isAmbiencePlaying) playGuzhengPluck();
+          return;
+        }
+        window.applyChronicleStage(idx, false);
+      };
+
+      buildPills();
+
+      // Lightweight stage-reactive ambient particle canvas inside the Moon-Gate
+      const canvas = document.getElementById('moongate-canvas');
+      if (canvas && !REDUCED_MOTION) {
+        const ctx = canvas.getContext('2d');
+        let cw = 0, ch = 0;
+
+        function resizeCanvas() {
+          cw = canvas.width = canvas.offsetWidth || 356;
+          ch = canvas.height = canvas.offsetHeight || 356;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const motes = Array.from({ length: 22 }, () => ({
+          x: Math.random() * cw,
+          y: Math.random() * ch,
+          r: 2 + Math.random() * 14,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: -(0.35 + Math.random() * 0.85),
+          a: 0.14 + Math.random() * 0.25
+        }));
+
+        function tickMoonGateCanvas() {
+          ctx.clearRect(0, 0, cw, ch);
+          const isFire = activeChronicleIndex === 1 || activeChronicleIndex === 2;
+          motes.forEach((m) => {
+            m.x += m.vx + Math.sin(m.y * 0.02) * 0.25;
+            m.y += isFire ? m.vy * 1.6 : m.vy * 0.85;
+            if (m.y < -20) {
+              m.y = ch + 15;
+              m.x = Math.random() * cw;
+            }
+            if (isFire) {
+              ctx.fillStyle = `rgba(243, 190, 90, ${Math.min(0.75, m.a * 2.1).toFixed(3)})`;
+              ctx.beginPath();
+              ctx.arc(m.x, m.y, Math.max(1.2, m.r * 0.16), 0, Math.PI * 2);
+              ctx.fill();
+            } else {
+              const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r * 1.4);
+              g.addColorStop(0, `rgba(245, 239, 230, ${(m.a * 0.55).toFixed(3)})`);
+              g.addColorStop(1, 'rgba(245, 239, 230, 0)');
+              ctx.fillStyle = g;
+              ctx.beginPath();
+              ctx.arc(m.x, m.y, m.r * 1.4, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
+          requestAnimationFrame(tickMoonGateCanvas);
+        }
+        requestAnimationFrame(tickMoonGateCanvas);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 7. ACT 2: INTERACTIVE BAMBOO STEAMER LID & STEAM BURST CANVAS
+    // -------------------------------------------------------------------------
+    function initBambooSteamer() {
+      const slider = document.getElementById('steamer-slider');
+      const toggleBtn = document.getElementById('steamer-toggle-btn');
+      const canvas = document.getElementById('steamer-canvas');
+
+      if (slider) {
+        slider.addEventListener('input', (e) => {
+          manualSteamerOverride = Number(e.target.value) / 100;
+          if (toggleBtn) {
+            toggleBtn.textContent = manualSteamerOverride > 0.5 ? 'Close Bamboo Lid' : 'Lift Lid Completely';
+          }
+        });
+      }
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          const isCurrentlyOpen = steamerOpenAmount > 0.5;
+          manualSteamerOverride = isCurrentlyOpen ? 0 : 1;
+          if (slider) slider.value = Math.round(manualSteamerOverride * 100);
+          toggleBtn.textContent = manualSteamerOverride > 0.5 ? 'Close Bamboo Lid' : 'Lift Lid Completely';
+          if (manualSteamerOverride === 1 && window.triggerSteamerBurst) {
+            window.triggerSteamerBurst();
+          }
+        });
+      }
+
+      if (!canvas || REDUCED_MOTION) return;
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0;
+      const wisps = [];
+
+      function resize() {
+        w = canvas.width = canvas.offsetWidth || 340;
+        h = canvas.height = canvas.offsetHeight || 340;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      window.triggerSteamerBurst = function () {
+        for (let i = 0; i < 24; i++) {
+          wisps.push({
+            x: w * (0.25 + Math.random() * 0.5),
+            y: h * (0.45 + Math.random() * 0.35),
+            r: 16 + Math.random() * 28,
+            vx: (Math.random() - 0.5) * 0.7,
+            vy: -(0.7 + Math.random() * 1.1),
+            alpha: 0.32 + Math.random() * 0.22
+          });
+        }
+      };
+
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+        if (steamerOpenAmount > 0.2 && Math.random() < 0.22 && wisps.length < 36) {
+          wisps.push({
+            x: w * (0.2 + Math.random() * 0.6),
+            y: h * (0.65 + Math.random() * 0.25),
+            r: 14 + Math.random() * 22,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: -(0.45 + Math.random() * 0.75),
+            alpha: 0.22 * steamerOpenAmount
+          });
+        }
+        for (let i = wisps.length - 1; i >= 0; i--) {
+          const p = wisps[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.r += 0.28;
+          p.alpha -= 0.0045;
+          if (p.alpha <= 0) {
+            wisps.splice(i, 1);
+            continue;
+          }
+          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+          g.addColorStop(0, `rgba(245, 239, 230, ${p.alpha.toFixed(3)})`);
+          g.addColorStop(1, 'rgba(245, 239, 230, 0)');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // -------------------------------------------------------------------------
+    // 8. ACT 3: CURATED MENU, 3D PORCELAIN GLAZE, QUICK-VIEW MODAL & TASTING TRAY
+    // -------------------------------------------------------------------------
+    function renderSpiceDots(level) {
+      if (!level) return '<span class="text-[10px] uppercase tracking-wider text-mist/70">Mild</span>';
+      return Array.from({ length: 3 }, (_, i) =>
+        `<span class="w-1.5 h-1.5 rounded-full ${i < level ? 'bg-vermilion' : 'bg-white/15'}"></span>`
+      ).join('');
+    }
+
+    function renderMenu() {
+      const filtersEl = document.getElementById('menu-filters');
+      const gridEl = document.getElementById('menu-grid');
+      if (!filtersEl || !gridEl) return;
+
+      const categories = ['All', 'Dim Sum', 'Imperial Roasts', 'Wok & Noodles', 'Teas & Elixirs'];
+      filtersEl.innerHTML = categories
+        .map(
+          (cat) => `
+          <button
+            type="button"
+            onclick="setMenuCategory('${cat}')"
+            class="px-4 py-2 rounded-full text-[11px] uppercase tracking-[0.18em] border transition-all ${
+              activeCategory === cat
+                ? 'bg-crimson border-crimson text-ivory shadow-lg shadow-crimson/25'
+                : 'bg-obsidian/70 border-gold/20 text-mist hover:border-gold/60 hover:text-ivory'
+            }"
+          >
+            ${cat}
+          </button>
+        `
+        )
+        .join('');
+
+      const list = activeCategory === 'All' ? DISHES : DISHES.filter((d) => d.category === activeCategory);
+      gridEl.innerHTML = list
+        .map(
+          (dish) => `
+          <article
+            class="dish-card relative rounded-3xl overflow-hidden bg-obsidian gold-border flex flex-col justify-between group"
+            onmousemove="handleCardTilt(event, this)"
+            onmouseleave="resetCardTilt(this)"
+          >
+            <div class="porcelain-sheen"></div>
+            <div>
+              <div class="relative h-56 overflow-hidden bg-charcoal cursor-pointer" onclick="openDishModal('${dish.id}')">
+                <img
+                  src="${dish.image}"
+                  alt="${dish.name}"
+                  class="card-img w-full h-full object-cover"
+                  onerror="this.onerror=null; this.src='${FALLBACK_FOOD_IMG}';"
+                />
+                <div class="absolute inset-0 photo-vignette"></div>
+                <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-obsidian/80 backdrop-blur-md border border-gold/25 text-[10px] uppercase tracking-[0.18em] text-champagne">
+                  ${dish.origin}
+                </span>
+                <div class="absolute bottom-3.5 left-4 right-4 flex items-end justify-between">
+                  <span class="font-cn text-sm text-champagne tracking-widest">${dish.cn}</span>
+                  <span class="font-serif text-2xl text-ivory">$${dish.price}</span>
+                </div>
+              </div>
+
+              <div class="p-5">
+                <div class="flex items-center justify-between gap-2 mb-1.5">
+                  <span class="text-[10px] uppercase tracking-[0.2em] text-gold">${dish.category}</span>
+                  <div class="flex items-center gap-1">${renderSpiceDots(dish.spice)}</div>
+                </div>
+                <h3 class="font-serif text-2xl text-ivory leading-snug cursor-pointer hover:text-champagne transition-colors" onclick="openDishModal('${dish.id}')">
+                  ${dish.name}
+                </h3>
+                <p class="mt-2 text-xs text-mist leading-relaxed line-clamp-2">${dish.desc}</p>
+              </div>
+            </div>
+
+            <div class="px-5 pb-5 pt-2 flex items-center gap-2.5">
+              <button
+                type="button"
+                onclick="openDishModal('${dish.id}')"
+                class="flex-1 py-2.5 rounded-full bg-charcoal hover:bg-lacquer border border-gold/25 text-[10px] uppercase tracking-[0.18em] text-champagne transition-colors"
+              >
+                Inspect
+              </button>
+              <button
+                type="button"
+                onclick="addToTastingTray('${dish.id}')"
+                class="flex-1 py-2.5 rounded-full bg-crimson hover:bg-vermilion text-[10px] uppercase tracking-[0.18em] text-ivory font-medium transition-colors"
+              >
+                + Tasting
+              </button>
+            </div>
+          </article>
+        `
+        )
+        .join('');
+    }
+
+    window.setMenuCategory = function (cat) {
+      activeCategory = cat;
+      renderMenu();
+    };
+
+    window.handleCardTilt = function (e, card) {
+      if (!HAS_FINE_POINTER || REDUCED_MOTION) return;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rx = ((y / rect.height) - 0.5) * -7;
+      const ry = ((x / rect.width) - 0.5) * 7;
+      card.style.setProperty('--gx', `${((x / rect.width) * 100).toFixed(1)}%`);
+      card.style.setProperty('--gy', `${((y / rect.height) * 100).toFixed(1)}%`);
+      card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`;
+    };
+
+    window.resetCardTilt = function (card) {
+      card.style.transform = '';
+    };
+
+    // Quick-View Dish Modal
+    window.openDishModal = function (dishId) {
+      const dish = DISHES.find((d) => d.id === dishId);
+      const modal = document.getElementById('dish-modal');
+      if (!dish || !modal) return;
+      activeModalDishId = dish.id;
+
+      document.getElementById('modal-img').src = dish.image;
+      document.getElementById('modal-img').alt = dish.name;
+      document.getElementById('modal-category').textContent = `${dish.category} • ${dish.origin}`;
+      document.getElementById('modal-spice').innerHTML = renderSpiceDots(dish.spice);
+      document.getElementById('modal-cn').textContent = dish.cn;
+      document.getElementById('modal-title').textContent = dish.name;
+      document.getElementById('modal-price').textContent = `$${dish.price}`;
+      document.getElementById('modal-tags').innerHTML = dish.tags
+        .map((t) => `<span class="px-2.5 py-0.5 rounded-full bg-obsidian border border-gold/25 text-[10px] uppercase tracking-wider text-mist">${t}</span>`)
+        .join('');
+      document.getElementById('modal-desc').textContent = dish.desc;
+      document.getElementById('modal-notes').textContent = dish.notes;
+      document.getElementById('modal-pairing').textContent = dish.pairing;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    };
+
+    function closeDishModal() {
+      const modal = document.getElementById('dish-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Tasting Tray Cart
+    window.addToTastingTray = function (dishId) {
+      const dish = DISHES.find((d) => d.id === dishId);
+      if (!dish) return;
+      const existing = tastingCart.find((i) => i.id === dish.id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        tastingCart.push({ id: dish.id, name: dish.name, cn: dish.cn, price: dish.price, image: dish.image, qty: 1 });
+      }
+      renderTastingTray();
+      showToast(`Added ${dish.name} to Tasting Tray`);
+      if (isAmbiencePlaying) playGuzhengPluck();
+    };
+
+    window.updateTrayQty = function (dishId, delta) {
+      const item = tastingCart.find((i) => i.id === dishId);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        tastingCart = tastingCart.filter((i) => i.id !== dishId);
+      }
+      renderTastingTray();
+    };
+
+    function renderTastingTray() {
+      const itemsEl = document.getElementById('tray-items');
+      const totalEl = document.getElementById('tray-total');
+      const badgeEl = document.getElementById('tray-badge');
+      const resWrap = document.getElementById('res-tray-summary-wrap');
+      const resText = document.getElementById('res-tray-summary-text');
+
+      const totalQty = tastingCart.reduce((acc, i) => acc + i.qty, 0);
+      const totalPrice = tastingCart.reduce((acc, i) => acc + i.price * i.qty, 0);
+
+      if (badgeEl) badgeEl.textContent = totalQty;
+      if (totalEl) totalEl.textContent = `$${totalPrice}`;
+
+      if (resWrap && resText) {
+        if (tastingCart.length > 0) {
+          resWrap.classList.remove('hidden');
+          resText.textContent = tastingCart.map((i) => `${i.qty}× ${i.name}`).join(' • ');
+        } else {
+          resWrap.classList.add('hidden');
+        }
+      }
+
+      if (!itemsEl) return;
+      if (tastingCart.length === 0) {
+        itemsEl.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center py-14 space-y-3">
+            <div class="font-cn text-3xl text-gold/35">空</div>
+            <div class="font-serif text-2xl text-ivory/80">Your Tasting Tray is Empty</div>
+            <p class="text-xs text-mist max-w-xs">Select signature dishes from the Imperial Menu to pre-curate your table's feast.</p>
+          </div>
+        `;
+        return;
+      }
+
+      itemsEl.innerHTML = tastingCart
+        .map(
+          (item) => `
+          <div class="flex items-center gap-3.5 p-3 rounded-2xl bg-obsidian border border-gold/15">
+            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0" onerror="this.onerror=null; this.src='${FALLBACK_FOOD_IMG}';" />
+            <div class="flex-1 min-w-0">
+              <div class="font-serif text-lg text-ivory truncate">${item.name}</div>
+              <div class="text-xs text-champagne">$${item.price * item.qty}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="updateTrayQty('${item.id}', -1)" class="w-7 h-7 rounded-full bg-charcoal border border-gold/25 text-ivory hover:border-gold flex items-center justify-center text-xs">-</button>
+              <span class="text-xs text-ivory w-4 text-center tabular-nums">${item.qty}</span>
+              <button type="button" onclick="updateTrayQty('${item.id}', 1)" class="w-7 h-7 rounded-full bg-charcoal border border-gold/25 text-ivory hover:border-gold flex items-center justify-center text-xs">+</button>
+            </div>
+          </div>
+        `
+        )
+        .join('');
+    }
+
+    function openTray() {
+      const backdrop = document.getElementById('tray-backdrop');
+      const drawer = document.getElementById('tray-drawer');
+      if (!backdrop || !drawer) return;
+      backdrop.classList.remove('hidden');
+      requestAnimationFrame(() => drawer.classList.remove('translate-x-full'));
+    }
+
+    function closeTray() {
+      const backdrop = document.getElementById('tray-backdrop');
+      const drawer = document.getElementById('tray-drawer');
+      if (!backdrop || !drawer) return;
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => backdrop.classList.add('hidden'), 280);
+    }
+
+    // -------------------------------------------------------------------------
+    // 9. ACT 4: INTERACTIVE CEREMONIAL TEA POUR RIPPLE SIMULATION
+    // -------------------------------------------------------------------------
+    function initTeaPourCanvas() {
+      const canvas = document.getElementById('tea-canvas');
+      const btn = document.getElementById('pour-tea-btn');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0;
+      let pourProgress = 0;
+      let isPouring = false;
+      const ripples = [];
+
+      function resize() {
+        w = canvas.width = canvas.offsetWidth || 540;
+        h = canvas.height = canvas.offsetHeight || 190;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function startPour() {
+        isPouring = true;
+        pourProgress = 0;
+        if (isAmbiencePlaying) playGuzhengPluck(523.25);
+        showToast('Pouring 15-Year Vintage Yunnan Pu-erh');
+      }
+
+      if (btn) btn.addEventListener('click', startPour);
+      canvas.addEventListener('click', startPour);
+
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+
+        // Warm dark-amber tea surface glow
+        const bg = ctx.createRadialGradient(w * 0.5, h * 0.65, 10, w * 0.5, h * 0.65, w * 0.55);
+        bg.addColorStop(0, 'rgba(138, 66, 18, 0.42)');
+        bg.addColorStop(0.55, 'rgba(66, 28, 10, 0.28)');
+        bg.addColorStop(1, 'rgba(11, 9, 8, 0.95)');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, w, h);
+
+        if (isPouring) {
+          pourProgress += 0.018;
+          const streamX = w * 0.5;
+          const impactY = h * 0.62;
+
+          // Golden amber pouring stream
+          const streamGrad = ctx.createLinearGradient(streamX, 0, streamX, impactY);
+          streamGrad.addColorStop(0, 'rgba(243, 210, 122, 0.92)');
+          streamGrad.addColorStop(1, 'rgba(196, 106, 26, 0.85)');
+          ctx.strokeStyle = streamGrad;
+          ctx.lineWidth = 5 + Math.sin(pourProgress * 20) * 1.2;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(streamX - 24, 0);
+          ctx.quadraticCurveTo(streamX - 4, impactY * 0.45, streamX, impactY);
+          ctx.stroke();
+
+          if (Math.random() < 0.35) {
+            ripples.push({ x: streamX, y: impactY, rx: 8, ry: 3, alpha: 0.75 });
+          }
+          if (pourProgress >= 1.5) isPouring = false;
+        } else if (Math.random() < 0.03) {
+          ripples.push({ x: w * (0.35 + Math.random() * 0.3), y: h * 0.62, rx: 6, ry: 2.5, alpha: 0.35 });
+        }
+
+        for (let i = ripples.length - 1; i >= 0; i--) {
+          const r = ripples[i];
+          r.rx += 1.65;
+          r.ry += 0.55;
+          r.alpha -= 0.01;
+          if (r.alpha <= 0) {
+            ripples.splice(i, 1);
+            continue;
+          }
+          ctx.strokeStyle = `rgba(243, 210, 122, ${r.alpha.toFixed(3)})`;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.ellipse(r.x, r.y, r.rx, r.ry, 0, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // -------------------------------------------------------------------------
+    // 10. MASTER 60FPS SCROLL CHOREOGRAPHY (ACT 0 DOORS + ACT 2 STEAMER + ACT V ROOMS + PROGRESS)
+    // -------------------------------------------------------------------------
+    function initScrollChoreography() {
+      const scrollBar = document.getElementById('scroll-progress');
+      const navbar = document.getElementById('navbar');
+
+      const entranceSec = document.getElementById('act-entrance');
+      const doorsWrap = document.getElementById('entrance-doors-wrap');
+      const doorLeft = document.getElementById('door-left');
+      const doorRight = document.getElementById('door-right');
+      const entranceInterior = document.getElementById('entrance-interior');
+      const entranceCopy = document.getElementById('entrance-copy');
+      const entranceScrollCue = document.getElementById('entrance-scroll-cue');
+
+      // Act I: Live Kitchen Chronicles Scroll-Scrubbed References
+      const kitchenSec = document.getElementById('act-kitchen');
+      const moonGateRing = document.getElementById('moongate-brass-ring');
+
+      const steamerSec = document.getElementById('act-steamer');
+      const steamerLid = document.getElementById('steamer-lid');
+      const steamerPctLabel = document.getElementById('steamer-pct-label');
+      const steamerSlider = document.getElementById('steamer-slider');
+      const steamerToggleBtn = document.getElementById('steamer-toggle-btn');
+
+      // Act V: Private Dining Rooms Scroll-Scrubbed Walkthrough References
+      const roomsSec = document.getElementById('act-rooms');
+      const roomLayer1 = document.getElementById('room-layer-1');
+      const roomLayer2 = document.getElementById('room-layer-2');
+      const roomImgs = [
+        document.getElementById('room-img-0'),
+        document.getElementById('room-img-1'),
+        document.getElementById('room-img-2')
+      ];
+      const roomBrassSeam = document.getElementById('room-brass-seam');
+      const roomWatermark = document.getElementById('room-watermark');
+
+      let steamerBurstFired = false;
+
+      function clamp(val, min, max) {
+        return Math.min(max, Math.max(min, val));
+      }
+
+      function tick() {
+        const scrollY = window.scrollY;
+        const winH = window.innerHeight;
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - winH);
+
+        if (scrollBar) {
+          scrollBar.style.width = `${clamp((scrollY / maxScroll) * 100, 0, 100)}%`;
+        }
+
+        if (navbar) {
+          if (scrollY > 36) {
+            navbar.classList.add('bg-obsidian/92', 'backdrop-blur-xl', 'border-gold/15', 'shadow-xl');
+          } else {
+            navbar.classList.remove('bg-obsidian/92', 'backdrop-blur-xl', 'border-gold/15', 'shadow-xl');
+          }
+        }
+
+        if (entranceSec && doorLeft && doorRight && doorsWrap && entranceInterior && entranceCopy && entranceScrollCue) {
+          const rect = entranceSec.getBoundingClientRect();
+          const travel = Math.max(1, entranceSec.offsetHeight - winH);
+          const p = clamp(-rect.top / travel, 0, 1);
+
+          const shift = p * 108;
+          doorLeft.style.transform = `translate3d(${-shift.toFixed(2)}%, 0, 0)`;
+          doorRight.style.transform = `translate3d(${shift.toFixed(2)}%, 0, 0)`;
+          doorsWrap.style.opacity = p > 0.85 ? `${clamp(1 - (p - 0.85) / 0.15, 0, 1)}` : '1';
+
+          const zoom = 1 + p * 0.14;
+          entranceInterior.style.transform = `scale(${zoom.toFixed(4)})`;
+          entranceCopy.style.transform = `translate3d(0, ${(-p * 28).toFixed(1)}px, 0)`;
+          entranceScrollCue.style.opacity = p > 0.12 ? '0' : '1';
+        }
+
+        // Act I: Live Kitchen Chronicles Scroll-Scrubbed Realms (Desktop >= 1024px)
+        if (kitchenSec && window.innerWidth >= 1024 && !REDUCED_MOTION) {
+          const rect = kitchenSec.getBoundingClientRect();
+          const travel = Math.max(1, kitchenSec.offsetHeight - winH);
+          const p = clamp(-rect.top / travel, 0, 1);
+
+          // 1. Live gold progress fills across the 4 heat station pills
+          for (let i = 0; i < 4; i++) {
+            const seg = clamp((p - i * 0.25) / 0.25, 0, 1);
+            const fillEl = document.getElementById(`moongate-progress-${i}`);
+            if (fillEl) fillEl.style.width = `${(seg * 100).toFixed(1)}%`;
+          }
+
+          // 2. Smoothly rotate the engraved brass thermal ring 0deg -> -270deg
+          if (moonGateRing) {
+            moonGateRing.style.transform = `rotate(${(-p * 270).toFixed(2)}deg)`;
+          }
+
+          // 3. Trigger circular Moon-Gate iris reveal & cinnabar seal stamp per quadrant
+          const targetIdx = p < 0.25 ? 0 : p < 0.50 ? 1 : p < 0.75 ? 2 : 3;
+          if (targetIdx !== activeChronicleIndex && window.applyChronicleStage) {
+            window.applyChronicleStage(targetIdx, true);
+          }
+        }
+
+        if (steamerSec && steamerLid) {
+          let openP;
+          if (manualSteamerOverride !== null) {
+            openP = manualSteamerOverride;
+          } else {
+            const rect = steamerSec.getBoundingClientRect();
+            openP = clamp((winH * 0.72 - rect.top) / (winH * 0.55), 0, 1);
+            if (steamerSlider) steamerSlider.value = Math.round(openP * 100);
+          }
+
+          steamerOpenAmount = openP;
+          if (steamerPctLabel) steamerPctLabel.textContent = `${Math.round(openP * 100)}% Open`;
+          if (steamerToggleBtn && manualSteamerOverride === null) {
+            steamerToggleBtn.textContent = openP > 0.5 ? 'Close Bamboo Lid' : 'Lift Lid Completely';
+          }
+
+          const tx = openP * 72;
+          const ty = -openP * 36;
+          const rot = openP * 64;
+          const op = clamp(1 - Math.max(0, (openP - 0.75) * 3.2), 0.15, 1);
+          steamerLid.style.transform = `translate3d(${tx.toFixed(1)}%, ${ty.toFixed(1)}%, 0) rotate(${rot.toFixed(1)}deg)`;
+          steamerLid.style.opacity = op.toFixed(2);
+
+          if (openP > 0.45 && !steamerBurstFired && window.triggerSteamerBurst) {
+            steamerBurstFired = true;
+            window.triggerSteamerBurst();
+          } else if (openP < 0.15) {
+            steamerBurstFired = false;
+          }
+        }
+
+        // Act V: Private Dining Rooms Scroll-Scrubbed Walkthrough (Desktop >= 1024px)
+        if (roomsSec && window.innerWidth >= 1024 && !REDUCED_MOTION) {
+          const rect = roomsSec.getBoundingClientRect();
+          const travel = Math.max(1, roomsSec.offsetHeight - winH);
+          const p = clamp(-rect.top / travel, 0, 1);
+
+          // 1. Live gold progress fills on the 3 room selector tabs
+          const seg0 = clamp(p / 0.3333, 0, 1);
+          const seg1 = clamp((p - 0.3333) / 0.3333, 0, 1);
+          const seg2 = clamp((p - 0.6666) / 0.3334, 0, 1);
+          const segs = [seg0, seg1, seg2];
+          segs.forEach((sv, idx) => {
+            const fillEl = document.getElementById(`room-progress-${idx}`);
+            if (fillEl) fillEl.style.width = `${(sv * 100).toFixed(1)}%`;
+          });
+
+          // 2. Cedar sliding-screen clip-path wipes (0 -> 1 over 0.24..0.42, 1 -> 2 over 0.58..0.76)
+          const wipe1 = clamp((p - 0.24) / 0.18, 0, 1);
+          const wipe2 = clamp((p - 0.58) / 0.18, 0, 1);
+          if (roomLayer1) roomLayer1.style.clipPath = `inset(0 0 0 ${((1 - wipe1) * 100).toFixed(2)}%)`;
+          if (roomLayer2) roomLayer2.style.clipPath = `inset(0 0 0 ${((1 - wipe2) * 100).toFixed(2)}%)`;
+
+          // 3. Luminous antique-gold vertical brass divider seam gliding across active wipe
+          if (roomBrassSeam) {
+            if (wipe1 > 0.006 && wipe1 < 0.994) {
+              roomBrassSeam.style.left = `${((1 - wipe1) * 100).toFixed(2)}%`;
+              roomBrassSeam.style.opacity = Math.sin(wipe1 * Math.PI).toFixed(3);
+            } else if (wipe2 > 0.006 && wipe2 < 0.994) {
+              roomBrassSeam.style.left = `${((1 - wipe2) * 100).toFixed(2)}%`;
+              roomBrassSeam.style.opacity = Math.sin(wipe2 * Math.PI).toFixed(3);
+            } else {
+              roomBrassSeam.style.opacity = '0';
+            }
+          }
+
+          // 4. Live interior Ken Burns depth zoom (1.02 -> 1.10) & gentle vertical parallax
+          roomImgs.forEach((img, idx) => {
+            if (!img) return;
+            const localP = segs[idx];
+            const scale = 1.02 + localP * 0.08;
+            const shiftY = -10 + localP * 20;
+            img.style.transform = `scale(${scale.toFixed(4)}) translate3d(0, ${shiftY.toFixed(1)}px, 0)`;
+          });
+
+          // 5. Determine active room index & update dossier cleanly on change
+          const targetIdx = p < 0.33 ? 0 : p < 0.67 ? 1 : 2;
+          if (targetIdx !== activeRoomIndex) {
+            activeRoomIndex = targetIdx;
+            updateRoomDossierAndTabs(true);
+          }
+
+          // 6. Subtle glide on giant background numeral watermark
+          if (roomWatermark) {
+            const activeSeg = segs[activeRoomIndex] || 0;
+            roomWatermark.style.transform = `translate3d(0, ${(-12 + activeSeg * 24).toFixed(1)}px, 0)`;
+          }
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    // -------------------------------------------------------------------------
+    // 11. ACT 5: PRIVATE DINING ROOMS (SCROLL WALKTHROUGH + BOKEH + CLICK HARMONY)
+    // -------------------------------------------------------------------------
+    function buildRoomTabs() {
+      const tabsEl = document.getElementById('room-tabs');
+      if (!tabsEl) return;
+      tabsEl.innerHTML = DINING_ROOMS.map(
+        (room, idx) => `
+        <button
+          id="room-tab-btn-${idx}"
+          type="button"
+          onclick="selectDiningRoom(${idx})"
+          class="relative overflow-hidden text-left p-4 rounded-2xl border transition-all ${
+            idx === activeRoomIndex
+              ? 'bg-obsidian border-gold shadow-lg shadow-gold/10 opacity-100'
+              : 'bg-obsidian/55 border-gold/15 hover:border-gold/45 opacity-80 hover:opacity-100'
+          }"
+        >
+          <div class="flex items-center justify-between">
+            <span class="font-cn text-xs text-vermilion tracking-widest">${room.cn}</span>
+            <span id="room-tab-num-${idx}" class="text-[10px] uppercase tracking-widest ${idx === activeRoomIndex ? 'text-gold' : 'text-mist'}">${room.num}</span>
+          </div>
+          <div class="font-serif text-xl sm:text-2xl text-ivory mt-1">${room.name}</div>
+          <div class="text-[11px] text-mist mt-0.5">${room.capacity}</div>
+          <div class="room-tab-progress-track">
+            <div id="room-progress-${idx}" class="room-tab-progress-fill" style="width: ${idx === 0 ? '100%' : '0%'};"></div>
+          </div>
+        </button>
+      `
+      ).join('');
+    }
+
+    function updateRoomDossierAndTabs(stagger = false) {
+      const active = DINING_ROOMS[activeRoomIndex];
+
+      DINING_ROOMS.forEach((_, idx) => {
+        const btn = document.getElementById(`room-tab-btn-${idx}`);
+        const numEl = document.getElementById(`room-tab-num-${idx}`);
+        if (!btn) return;
+        if (idx === activeRoomIndex) {
+          btn.classList.add('bg-obsidian', 'border-gold', 'shadow-lg', 'shadow-gold/10', 'opacity-100');
+          btn.classList.remove('bg-obsidian/55', 'border-gold/15', 'opacity-80');
+          if (numEl) {
+            numEl.classList.add('text-gold');
+            numEl.classList.remove('text-mist');
+          }
+        } else {
+          btn.classList.remove('bg-obsidian', 'border-gold', 'shadow-lg', 'shadow-gold/10', 'opacity-100');
+          btn.classList.add('bg-obsidian/55', 'border-gold/15', 'opacity-80');
+          if (numEl) {
+            numEl.classList.remove('text-gold');
+            numEl.classList.add('text-mist');
+          }
+        }
+      });
+
+      const stepText = `${active.num} / 03`;
+      const stepBadge = document.getElementById('room-step-badge');
+      const scrollCounter = document.getElementById('room-scroll-counter');
+      const watermark = document.getElementById('room-watermark');
+      if (stepBadge) stepBadge.textContent = stepText;
+      if (scrollCounter) scrollCounter.textContent = stepText;
+      if (watermark) watermark.textContent = active.num;
+
+      document.getElementById('room-capacity-badge').textContent = active.capacity;
+      document.getElementById('room-cn').textContent = active.cn;
+      document.getElementById('room-name').textContent = active.name;
+      document.getElementById('room-desc').textContent = active.desc;
+      document.getElementById('room-ideal').textContent = active.ideal;
+      document.getElementById('room-highlights').innerHTML = active.highlights
+        .map(
+          (h) => `
+          <li class="flex items-start gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold mt-1.5 flex-shrink-0"></span>
+            <span>${h}</span>
+          </li>
+        `
+        )
+        .join('');
+
+      if (stagger && !REDUCED_MOTION) {
+        const items = document.querySelectorAll('#act-rooms .dossier-stagger');
+        items.forEach((el) => {
+          el.style.transitionDelay = '0ms';
+          el.classList.add('is-entering');
+        });
+        requestAnimationFrame(() => {
+          items.forEach((el, i) => {
+            el.style.transitionDelay = `${i * 55}ms`;
+            el.classList.remove('is-entering');
+          });
+        });
+      }
+    }
+
+    function applyMobileRoomVisuals(idx) {
+      const layer1 = document.getElementById('room-layer-1');
+      const layer2 = document.getElementById('room-layer-2');
+      if (layer1) layer1.style.clipPath = idx >= 1 ? 'inset(0 0 0 0%)' : 'inset(0 0 0 100%)';
+      if (layer2) layer2.style.clipPath = idx >= 2 ? 'inset(0 0 0 0%)' : 'inset(0 0 0 100%)';
+      DINING_ROOMS.forEach((_, i) => {
+        const fillEl = document.getElementById(`room-progress-${i}`);
+        if (fillEl) fillEl.style.width = i === idx ? '100%' : '0%';
+      });
+    }
+
+    window.selectDiningRoom = function (idx) {
+      const roomsSec = document.getElementById('act-rooms');
+      if (roomsSec && window.innerWidth >= 1024 && !REDUCED_MOTION) {
+        const focalPoints = [0.06, 0.50, 0.94];
+        const secTop = roomsSec.getBoundingClientRect().top + window.scrollY;
+        const travel = Math.max(1, roomsSec.offsetHeight - window.innerHeight);
+        const targetY = secTop + travel * focalPoints[idx];
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        if (isAmbiencePlaying) playGuzhengPluck();
+        return;
+      }
+
+      if (idx === activeRoomIndex) return;
+      activeRoomIndex = idx;
+      applyMobileRoomVisuals(idx);
+      updateRoomDossierAndTabs(true);
+      if (isAmbiencePlaying) playGuzhengPluck();
+    };
+
+    function initRoomBokehCanvas() {
+      const canvas = document.getElementById('room-bokeh-canvas');
+      if (!canvas || REDUCED_MOTION) return;
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0;
+
+      function resize() {
+        w = canvas.width = canvas.offsetWidth || 640;
+        h = canvas.height = canvas.offsetHeight || 440;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const motes = Array.from({ length: 18 }, (_, i) => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: 10 + Math.random() * 24,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: -(0.12 + Math.random() * 0.26),
+        phase: Math.random() * Math.PI * 2,
+        phaseSpeed: 0.012 + Math.random() * 0.016,
+        alpha: 0.07 + Math.random() * 0.1,
+        useAccent: i % 3 === 0
+      }));
+
+      let curMain = [...DINING_ROOMS[0].bokehRgb];
+      let curAcc = [...DINING_ROOMS[0].bokehAccentRgb];
+
+      function tickBokeh() {
+        ctx.clearRect(0, 0, w, h);
+
+        const targetRoom = DINING_ROOMS[activeRoomIndex] || DINING_ROOMS[0];
+        for (let c = 0; c < 3; c++) {
+          curMain[c] += (targetRoom.bokehRgb[c] - curMain[c]) * 0.05;
+          curAcc[c] += (targetRoom.bokehAccentRgb[c] - curAcc[c]) * 0.05;
+        }
+
+        motes.forEach((m) => {
+          m.phase += m.phaseSpeed;
+          m.x += m.vx + Math.sin(m.phase) * 0.22;
+          m.y += m.vy;
+
+          if (m.y + m.r < 0) {
+            m.y = h + m.r;
+            m.x = Math.random() * w;
+          }
+          if (m.x < -m.r) m.x = w + m.r;
+          if (m.x > w + m.r) m.x = -m.r;
+
+          const rgb = m.useAccent ? curAcc : curMain;
+          const pulse = 0.65 + 0.35 * Math.sin(m.phase * 1.4);
+          const a = m.alpha * pulse;
+          const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r);
+          g.addColorStop(0, `rgba(${Math.round(rgb[0])}, ${Math.round(rgb[1])}, ${Math.round(rgb[2])}, ${a.toFixed(3)})`);
+          g.addColorStop(0.55, `rgba(${Math.round(rgb[0])}, ${Math.round(rgb[1])}, ${Math.round(rgb[2])}, ${(a * 0.35).toFixed(3)})`);
+          g.addColorStop(1, `rgba(${Math.round(rgb[0])}, ${Math.round(rgb[1])}, ${Math.round(rgb[2])}, 0)`);
+
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(tickBokeh);
+      }
+      requestAnimationFrame(tickBokeh);
+    }
+
+    function renderDiningRooms() {
+      buildRoomTabs();
+      updateRoomDossierAndTabs(false);
+      if (window.innerWidth < 1024) {
+        applyMobileRoomVisuals(activeRoomIndex);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 12. RESERVATIONS, MODAL, TRAY & GLOBAL CONTROLS
+    // -------------------------------------------------------------------------
+    function initReservations() {
+      const dateInput = document.getElementById('res-date');
+      if (dateInput) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.value = tomorrow.toISOString().split('T')[0];
+      }
+
+      const form = document.getElementById('reservation-form');
+      const invitationCard = document.getElementById('invitation-card');
+      const invitationSeal = document.getElementById('invitation-seal-stamp');
+
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('res-name').value.trim();
+          const date = document.getElementById('res-date').value;
+          const time = document.getElementById('res-time').value;
+          const guests = document.getElementById('res-guests').value;
+          const room = form.querySelector('input[name="dining-room"]:checked')?.value || 'The Red Lantern Hall';
+          const code = 'LT-' + Math.floor(1000 + Math.random() * 9000);
+
+          document.getElementById('inv-name').textContent = name;
+          document.getElementById('inv-datetime').textContent = `${date} • ${time}`;
+          document.getElementById('inv-room').textContent = room;
+          document.getElementById('inv-guests').textContent = guests;
+          document.getElementById('inv-code').textContent = code;
+
+          const invDishesWrap = document.getElementById('inv-dishes-wrap');
+          const invDishes = document.getElementById('inv-dishes');
+          if (tastingCart.length > 0) {
+            invDishesWrap.classList.remove('hidden');
+            invDishes.textContent = tastingCart.map((i) => `${i.qty}× ${i.name}`).join(', ');
+          } else {
+            invDishesWrap.classList.add('hidden');
+          }
+
+          form.classList.add('hidden');
+          invitationCard.classList.remove('hidden');
+
+          if (invitationSeal) {
+            invitationSeal.classList.remove('stamped');
+            void invitationSeal.offsetWidth;
+            invitationSeal.classList.add('stamped');
+          }
+
+          if (isAmbiencePlaying) playGuzhengPluck();
+          showToast('Imperial Invitation stamped & issued');
+        });
+      }
+
+      const resetBtn = document.getElementById('reset-reservation-btn');
+      if (resetBtn && invitationCard && form) {
+        resetBtn.addEventListener('click', () => {
+          invitationCard.classList.add('hidden');
+          form.classList.remove('hidden');
+        });
+      }
+
+      const copyBtn = document.getElementById('copy-code-btn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          const code = document.getElementById('inv-code')?.textContent || '';
+          const tempInput = document.createElement('input');
+          tempInput.value = code;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          try {
+            document.execCommand('copy');
+            showToast(`Booking code ${code} copied`);
+          } catch (err) {
+            showToast(`Booking code: ${code}`);
+          }
+          document.body.removeChild(tempInput);
+        });
+      }
+    }
+
+    function initGlobalControls() {
+      const reserveRoomBtn = document.getElementById('reserve-room-btn');
+      if (reserveRoomBtn) {
+        reserveRoomBtn.addEventListener('click', () => {
+          const selectedRoomName = DINING_ROOMS[activeRoomIndex].name;
+          document.querySelectorAll('input[name="dining-room"]').forEach((r) => {
+            r.checked = r.value === selectedRoomName;
+          });
+          document.getElementById('act-reservations')?.scrollIntoView({ behavior: 'smooth' });
+          showToast(`${selectedRoomName} pre-selected`);
+        });
+      }
+
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const dishModal = document.getElementById('dish-modal');
+      const modalAddBtn = document.getElementById('modal-add-btn');
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closeDishModal);
+      if (dishModal) {
+        dishModal.addEventListener('click', (e) => {
+          if (e.target === dishModal) closeDishModal();
+        });
+      }
+      if (modalAddBtn) {
+        modalAddBtn.addEventListener('click', () => {
+          if (activeModalDishId) {
+            addToTastingTray(activeModalDishId);
+            closeDishModal();
+          }
+        });
+      }
+
+      const openTrayBtn = document.getElementById('open-tray-btn');
+      const closeTrayBtn = document.getElementById('close-tray-btn');
+      const trayBackdrop = document.getElementById('tray-backdrop');
+      const attachBtn = document.getElementById('attach-to-res-btn');
+      const editAttachedBtn = document.getElementById('edit-attached-tray-btn');
+
+      if (openTrayBtn) openTrayBtn.addEventListener('click', openTray);
+      if (closeTrayBtn) closeTrayBtn.addEventListener('click', closeTray);
+      if (editAttachedBtn) editAttachedBtn.addEventListener('click', openTray);
+      if (trayBackdrop) {
+        trayBackdrop.addEventListener('click', (e) => {
+          if (e.target === trayBackdrop) closeTray();
+        });
+      }
+      if (attachBtn) {
+        attachBtn.addEventListener('click', () => {
+          closeTray();
+          document.getElementById('act-reservations')?.scrollIntoView({ behavior: 'smooth' });
+          showToast(tastingCart.length ? 'Tasting Tray attached to reservation' : 'Select dishes to attach');
+        });
+      }
+
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileNav = document.getElementById('mobile-nav');
+      if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('hidden'));
+      }
+      document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (mobileNav) mobileNav.classList.add('hidden');
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeDishModal();
+          closeTray();
+        }
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // 13. OBSERVERS, KITCHEN STATUS & TOAST
+    // -------------------------------------------------------------------------
+    function initObservers() {
+      const revealObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.reveal-up').forEach((el) => revealObs.observe(el));
+
+      const chefSeal = document.getElementById('chef-seal-stamp');
+      if (chefSeal) {
+        const sealObs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('stamped');
+                sealObs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.35 }
+        );
+        sealObs.observe(chefSeal);
+      }
+    }
+
+    function updateKitchenStatus() {
+      const hour = new Date().getHours();
+      const dot = document.getElementById('kitchen-status-dot');
+      const text = document.getElementById('kitchen-status-text');
+      if (!dot || !text) return;
+
+      if (hour >= 17 && hour < 23) {
+        dot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+        text.textContent = 'Kitchen Live • Woks at 315°C & Dim Sum Steaming';
+      } else if (hour >= 11 && hour < 17) {
+        dot.className = 'w-2 h-2 rounded-full bg-gold animate-pulse';
+        text.textContent = 'Prep Service • 48h Duck Curing & Broth Simmering';
+      } else {
+        dot.className = 'w-2 h-2 rounded-full bg-vermilion';
+        text.textContent = 'Resting • Reservations Open 24/7';
+      }
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', 'translate-y-4');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-4');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2400);
+    }
+
+    // BOOTSTRAP APPLICATION
+    window.addEventListener('DOMContentLoaded', () => {
+      initGlobalControls();
+      initHangingLanternPhysics();
+      initSparklingMouseTrail();
+      initAmbienceToggle();
+      initEntranceCanvas();
+      initMoonGateChronicles();
+      initBambooSteamer();
+      initTeaPourCanvas();
+      renderMenu();
+      renderDiningRooms();
+      initRoomBokehCanvas();
+      renderTastingTray();
+      initReservations();
+      updateKitchenStatus();
+      initObservers();
+      initScrollChoreography();
+    });
+  </script>
+</body>
+</html>
